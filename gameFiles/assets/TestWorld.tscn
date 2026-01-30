@@ -12,6 +12,15 @@ size = Vector2(10, 10)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ylboy"]
 data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ylboy"]
+
+[sub_resource type="Sky" id="Sky_u260v"]
+sky_material = SubResource("ProceduralSkyMaterial_ylboy")
+
+[sub_resource type="Environment" id="Environment_2wxo1"]
+background_mode = 2
+sky = SubResource("Sky_u260v")
+
 [node name="root" type="Node3D" unique_id=1782244063]
 
 [node name="player" parent="." unique_id=1683745841 instance=ExtResource("1_ylboy")]
@@ -26,3 +35,4 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_ylboy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=8678216]
+environment = SubResource("Environment_2wxo1")
