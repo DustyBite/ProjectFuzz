@@ -5,7 +5,8 @@
 [ext_resource type="Material" uid="uid://pakhjtwjlb5c" path="res://Scenes/Dev/TextWorldMultiTextures/wallMat.tres" id="3_i6tks"]
 [ext_resource type="Script" uid="uid://dwu7d1lcbix0i" path="res://scripts/interactable.gd" id="4_7klwu"]
 [ext_resource type="Material" uid="uid://e65dh38qv41i" path="res://Scenes/Dev/TextWorldMultiTextures/Cubert.tres" id="5_3budn"]
-[ext_resource type="PackedScene" uid="uid://bx8p32mrj8y8j" path="res://assets/Enemy/enemyTemp.tscn" id="6_3budn"]
+[ext_resource type="PackedScene" uid="uid://bx8p32mrj8y8j" path="res://assets/Enemy/SMTemp.tscn" id="6_3budn"]
+[ext_resource type="PackedScene" uid="uid://ddw4am886yhea" path="res://assets/Enemy/SST.tscn" id="7_hngj5"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2c0tr"]
 material = ExtResource("2_i6tks")
@@ -117,6 +118,7 @@ sdfgi_enabled = true
 
 [node name="TestingWorld" type="Node3D" unique_id=1782244063]
 script = ExtResource("1_8biw5")
+singleplayer_mode = true
 
 [node name="floor" type="StaticBody3D" parent="." unique_id=1921772296]
 
@@ -1185,3 +1187,21 @@ shape = SubResource("BoxShape3D_7klwu")
 
 [node name="CubertEVIL" parent="." unique_id=2118065443 instance=ExtResource("6_3budn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4227467, 1.5592166, 0)
+
+[node name="EnemyTemp" parent="." unique_id=625194972 instance=ExtResource("7_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.252716, 0.40000048, -1.8592267)
+
+[node name="EnemyTemp2" parent="." unique_id=664375793 instance=ExtResource("7_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2167149, 0.40000048, -1.9697561)
+
+[node name="EnemyTemp3" parent="." unique_id=434242975 instance=ExtResource("7_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6934805, 0.4, 0.44221926)
+
+[node name="EnemyTemp4" parent="." unique_id=1604481208 instance=ExtResource("7_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0473485, 0.4, -0.8390899)
+
+[node name="EnemyTemp5" parent="." unique_id=373134881 instance=ExtResource("7_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7336106, 0.4, -3.5419846)
+
+[node name="EnemyTemp6" parent="." unique_id=2059420635 instance=ExtResource("6_3budn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9569206, 0.7500005, 2.1290302)

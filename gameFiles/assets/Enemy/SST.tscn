@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ddw4am886yhea"]
+
+[ext_resource type="Script" uid="uid://bpbheklpquv8j" path="res://assets/Enemy/spiderAi.gd" id="1_b0ao0"]
+[ext_resource type="Material" uid="uid://doq1s51fe8dk4" path="res://assets/Enemy/Enemy.tres" id="2_uie42"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_7qvuc"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5uynd"]
+radius = 0.3
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fmmyl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:health")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="spiderSmallTemp" type="CharacterBody3D" unique_id=625194972]
+script = ExtResource("1_b0ao0")
+health = 50.0
+move_speed = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2146982986]
+material_override = ExtResource("2_uie42")
+mesh = SubResource("SphereMesh_7qvuc")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1398559329]
+shape = SubResource("SphereShape3D_5uynd")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1720734746]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=500535601]
+replication_config = SubResource("SceneReplicationConfig_fmmyl")

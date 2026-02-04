@@ -3,17 +3,18 @@ class_name GunScript
 # -------------------
 # NODES
 # -------------------
+
 @onready var raycast := $RayCast3D
 var debugLine: MeshInstance3D
+
 # -------------------
 # STATE
 # -------------------
+
 @export_enum("9mil", "shotgun") var caliber: String
 @export var maxAmmo: int
 @export var fireRate: float
-@export var spreadAngle: float = 2.0
 @export var fireRange: float = 500
-@export var damage: int = 10
 @export var isAutomatic: bool = false
 
 var canFire:= true
@@ -63,42 +64,61 @@ func reload():
 func shoot():
 	match caliber:
 		"9mil":
-			shootSingle()
+			shootSingle(false, 2.0, 10)
 		"shotgun":
-			shootShotgun()
+			shootSpread(8, 10, 10)
 
-func shootSingle():
+func shootSingle(pen: bool, spreadAngle: float, damage: int):
 	var spreadX = randf_range(-spreadAngle, spreadAngle)
 	var spreadY = randf_range(-spreadAngle, spreadAngle)
 	
 	raycast.rotation_degrees = Vector3(spreadX, spreadY, 0)
 	
-	raycast.enabled = true
-	raycast.force_raycast_update()
+	var current_damage = damage
+	var damage_falloff = 0.5
 	
 	var start = raycast.global_position
-	var end = raycast.get_collision_point() if raycast.is_colliding() else raycast.global_position + raycast.global_transform.basis * raycast.target_position
+	var ray_direction = raycast.global_transform.basis.z
+	var ray_origin = start
+	var max_distance = fireRange
 	
-	# Draw debug line
-	draw_debug_line(start, end)
+	var continue_penetrating = true
+	var traveled_distance = 0.0
 	
-	if raycast.is_colliding():
-		var hitObject = raycast.get_collider()
+	while continue_penetrating and traveled_distance < max_distance:
+		# Manual raycast using PhysicsRayQueryParameters3D
+		var space_state = raycast.get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_direction * (max_distance - traveled_distance))
+		var result = space_state.intersect_ray(query)
 		
-		# Apply damage
-		if hitObject.has_method("takeDamage"):
-			hitObject.takeDamage(damage)
+		if result:
+			var hit_point = result.position
+			var hitObject = result.collider
+			
+			if hitObject.has_method("takeDamage"):
+				hitObject.takeDamage(int(current_damage))
+			
+			current_damage *= damage_falloff
+			
+			if not pen or current_damage < 1:
+				draw_debug_line(start, hit_point)
+				continue_penetrating = false
+			else:
+				# Continue ray from slightly past the hit point
+				traveled_distance += start.distance_to(hit_point)
+				ray_origin = hit_point + ray_direction * 0.01
+		else:
+			# No hit, draw to max range
+			draw_debug_line(start, ray_origin + ray_direction * (max_distance - traveled_distance))
+			continue_penetrating = false
 	
-	raycast.enabled = false
 	raycast.rotation_degrees = Vector3.ZERO
 
-func shootShotgun():
-	var pellet_count = 8  # Number of pellets per shot
-	var shotgun_spread = 10.0  # Wider spread than normal guns
+func shootSpread(pelletCount, shotgunSpread, damage):
 	
-	for i in range(pellet_count):
-		var spreadX = randf_range(-shotgun_spread, shotgun_spread)
-		var spreadY = randf_range(-shotgun_spread, shotgun_spread)
+	for i in range(pelletCount):
+		var spreadX = randf_range(-shotgunSpread, shotgunSpread)
+		var spreadY = randf_range(-shotgunSpread, shotgunSpread)
 		
 		raycast.rotation_degrees = Vector3(spreadX, spreadY, 0)
 		

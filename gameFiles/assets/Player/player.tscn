@@ -31,7 +31,7 @@ properties/2/path = NodePath("head:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="player" type="CharacterBody3D" unique_id=910820454 node_paths=PackedStringArray("primary", "secondary")]
+[node name="player" type="CharacterBody3D" unique_id=910820454 node_paths=PackedStringArray("primary", "secondary") groups=["player"]]
 collision_layer = 2
 collision_mask = 27
 script = ExtResource("1_qm3y6")
@@ -70,10 +70,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.35, 0)
 [node name="uziGun" parent="head/firstPersonModel" unique_id=1571642211 instance=ExtResource("2_hvr4l")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.22806793, 1.1961257, -0.4857589)
 visible = false
+ammoType = "Full Metal Jacket"
+caliber = ""
 
 [node name="boomstick" parent="head/firstPersonModel" unique_id=824920579 instance=ExtResource("3_cr3b8")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.18957156, 1.2316588, -0.5847197)
 visible = false
+ammoType = "slug"
+slugDamage = 6000
 
 [node name="firstPersonCamera" type="Camera3D" parent="head" unique_id=942937341]
 cull_mask = 1047554
