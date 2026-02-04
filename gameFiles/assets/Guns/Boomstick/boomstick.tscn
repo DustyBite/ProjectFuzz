@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://duet4nec3tasi"]
+
+[ext_resource type="PackedScene" uid="uid://1wrn71wyllap" path="res://assets/Guns/Boomstick/BOOMSTICKTEMP.glb" id="1_ltitl"]
+[ext_resource type="Script" uid="uid://b0ubqk3city3g" path="res://assets/Guns/Boomstick/bsScript.gd" id="1_pfspb"]
+
+[node name="boomstick" type="Node3D" unique_id=824920579]
+script = ExtResource("1_pfspb")
+ammoType = "shotgun"
+maxAmmo = 4
+
+[node name="BOOMSTICKTEMP" parent="." unique_id=1216218891 instance=ExtResource("1_ltitl")]
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=565105922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02302944, 0.203922)
+target_position = Vector3(0, 0, 100)

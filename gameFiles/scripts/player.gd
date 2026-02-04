@@ -1,155 +1,206 @@
 extends CharacterBody3D
 
-# Player nodes
+# -------------------
+# NODES
+# -------------------
+
 @onready var head := $head
-@onready var playerCam := $head/firstPersonCamera
+@onready var firstPersonCamera := $head/firstPersonCamera
+@onready var thirdPersonCamera := $head/thirdPersonCamera
+
 @onready var standingCollisionShape := $standingCollisionShape
 @onready var crouchingCollisionShape := $crouchingCollisionShape
 @onready var playerHeightRC := $crouchRC
 @onready var jumpHeightRC := $jumpRC
-@onready var firstPersonCamera := $head/firstPersonCamera
-@onready var thirdPersonCamera := $head/thirdPersonCamera
+
+@onready var firstPersonModel := $head/firstPersonModel
+@onready var thirdPersonModel := $thirdPersonModel
+
 @onready var flashlight := $head/flashlight
+@onready var pauseUI := $pauseUI
 
-#var masterBusIndex = AudioServer.get_bus_index("Master")
+# -------------------
+# EQUIPMENT
+# -------------------
 
-var activeTerminal = null
+@export var primary : Node3D
+@export var secondary : Node3D
+@export var tertiary : Node3D
+var curEquipSlot = 0
+var equippedItem : Node3D = null
 
-#misc
-var enviorLocal = 0
-var playerCash = 100
-var driving = false
-var gasAmount = 0
-var inTerminal = false
-#@onready var tempUI := $UI/tempUI
-#@onready var pauseUI := $UI/pauseMenuControl
-var inPauseMenu = false
+# -------------------
+# STATE
+# -------------------
 
-#sounds
-#@onready var pickupSFX = $head/audio/pickupSFX
-#@onready var placeSFX = $head/audio/placeSFX
+var inPauseMenu := false
+var inTerminal := false
 
-#packages
-@onready var boxPos := $boxPos
-@onready var boxDrop := $boxDrop
-var carryMax = 10
-var carrying = 0
-var carryIndex = 0
-var itemArray: Array = [null, null, null, null, null, null, null, null]
-#var item: Node3D
-var carryType = "Null"
+var currentSpeed := 5.0
+const walkingSpeed := 4.0
+const sprintingSpeed := 8.0
+const crouchingSpeed := 2.0
 
-# World Nodes
-var main_scene = null
+var crouchingDepth := -0.5
+const jumpVelocity := 4.5
+var lerpSpeed := 10.0
 
-# Speed Variables
-var currentSpeed = 5.0
-const walkingSpeed = 4.0
-const sprintingSpeed = 8.0
-const crouchingSpeed = 2.0
+var direction := Vector3.ZERO
+const mouseSens := 0.25
+var camera := 1
+var flashlightToggle := false
 
-# movement Vars
-var crouchingDepth = -0.5
-const jumpVelocity = 4.5
-var lerpSpeed = 10.0
 
-# Input Variables
-var direction = Vector3.ZERO
-const mouseSens = 0.25
-var camera = 1
-var flashlightToggle = 0
-var buildM = 0
+# -------------------
+# VISIBILITY HELPERS
+# -------------------
 
-# Seating state
-var isSeated = false
+func set_layer_recursive(node: Node, layer: int, add := false):
+	if node is VisualInstance3D:
+		if add:
+			node.layers |= (1 << (layer - 1))
+		else:
+			node.layers = (1 << (layer - 1))
 
-# Get the gravity from the project settings
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	for child in node.get_children():
+		set_layer_recursive(child, layer, add)
+
+
+func setup_visibility_layers():
+	if is_multiplayer_authority():
+		# Local player
+		firstPersonCamera.cull_mask = 0b00000011
+		thirdPersonCamera.cull_mask = 0b00000101
+
+		set_layer_recursive(firstPersonModel, 2)
+		set_layer_recursive(thirdPersonModel, 1)
+		set_layer_recursive(thirdPersonModel, 3, true)
+	else:
+		# Remote player
+		set_layer_recursive(thirdPersonModel, 1)
+		set_layer_recursive(firstPersonModel, 0)
+
+
+# -------------------
+# LIFECYCLE
+# -------------------
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	main_scene = get_tree().root.get_node("root")
+	# Authority may not be valid yet on clients
+	call_deferred("_post_ready")
+
+
+func _post_ready():
+	print("Player:", name, " Authority:", get_multiplayer_authority())
+
+	setup_visibility_layers()
+
+	if is_multiplayer_authority():
+		firstPersonCamera.current = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		print("✓ Local player")
+	else:
+		# Remote players never keep cameras
+		firstPersonCamera.queue_free()
+		thirdPersonCamera.queue_free()
+		print("✗ Remote player")
+
+
+# -------------------
+# INPUT
+# -------------------
+
+func _process(_delta):
+	if Input.is_action_pressed("use"):
+		if equippedItem != null:
+			equippedItem.useHeld()
+	elif Input.is_action_just_released("use"):
+		if equippedItem != null:
+			equippedItem.useReleased()
 
 func _input(event):
-	# Pause always works
+	if not is_multiplayer_authority():
+		return
+
 	if Input.is_action_just_pressed("pause"):
 		if inPauseMenu:
 			unpauseGame()
 		else:
 			pauseGame()
 		return
-	
-	#if event.is_action_pressed("DEBUGSPAWNVAN"):
-		#var root = get_tree().root.get_node("root")
-		#root.spawnVan()
-	
-	#if inTerminal:
-		#if activeTerminal and (event is InputEventMouseMotion or event is InputEventMouseButton):
-			#activeTerminal.node_viewport.push_input(event)
-		#return
-	
-	# Ignore *all* other input while paused or inTerminal
-	if inPauseMenu:
+
+	if inPauseMenu or inTerminal:
 		return
 
-	# Mouse look
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouseSens))
 		head.rotate_x(deg_to_rad(-event.relative.y * mouseSens))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
-	# Other gameplay inputs
 	if Input.is_action_just_pressed("changeCamera"):
 		changeCamera()
+	
+	if Input.is_action_just_pressed("primary"):
+		gunInteraction(1)
+	
+	if Input.is_action_just_pressed("secondary"):
+		if secondary != null:
+			secondary.visible = true
+		gunInteraction(2)
+	
+	if Input.is_action_just_pressed("tertiary"):
+		if tertiary != null:
+			tertiary.visible = true
+		gunInteraction(3)
+	
+	if Input.is_action_just_pressed("reload"):
+		if equippedItem != null:
+			equippedItem.reload()
+	
 	if Input.is_action_just_pressed("flashlight"):
 		toggleFlashlight()
 
-func _process(_delta: float) -> void:
-	#if driving == true:
-		#gasText.text = "Gas: " + str(round(currentVehicle.gasLevel)) + " gal"
-		#shiftText.text = "Current Gear: " + currentVehicle.currentGear
-	#else:
-		#gasText.text = ""
-		#shiftText.text = ""
-	pass
 
-func _physics_process(delta: float) -> void:
-	# Ignore all other inputs while paused
+# -------------------
+# PHYSICS
+# -------------------
+
+func _physics_process(delta):
+	if not is_multiplayer_authority():
+		# Prevent drift on remote players
+		velocity = Vector3.ZERO
+		return
+
 	if get_tree().paused or inTerminal:
 		return
-	
-	# Crouching
+
+	# Crouch
 	if Input.is_action_pressed("crouch"):
 		currentSpeed = crouchingSpeed
-		head.position.y = lerp(head.position.y, 1.5 + crouchingDepth, delta * lerpSpeed)
+		head.position.y = lerp(head.position.y, 1.35 + crouchingDepth, delta * lerpSpeed)
 		standingCollisionShape.disabled = true
 		crouchingCollisionShape.disabled = false
-		
-	elif !playerHeightRC.is_colliding():
-		head.position.y = lerp(head.position.y, 1.5, delta * lerpSpeed)
+	elif not playerHeightRC.is_colliding():
+		head.position.y = lerp(head.position.y, 1.35, delta * lerpSpeed)
 		standingCollisionShape.disabled = false
 		crouchingCollisionShape.disabled = true
-		
-		if Input.is_action_pressed("sprint"):
-			currentSpeed = sprintingSpeed
-		else:
-			currentSpeed = walkingSpeed
-	
+		currentSpeed = sprintingSpeed if Input.is_action_pressed("sprint") else walkingSpeed
+
 	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
 	# Jump
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and !jumpHeightRC.is_colliding():
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not jumpHeightRC.is_colliding():
 		velocity.y = jumpVelocity
 
 	# Movement
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var input_dir := Input.get_vector("left", "right", "forward", "back")
 	var forward = head.global_transform.basis.z
 	var right = head.global_transform.basis.x
-	var relative_direction = (right * input_dir.x + forward * input_dir.y).normalized()
-	direction = lerp(direction, relative_direction, delta * lerpSpeed)
+	var target_dir = (right * input_dir.x + forward * input_dir.y).normalized()
+
+	direction = direction.lerp(target_dir, delta * lerpSpeed)
 
 	if direction != Vector3.ZERO:
 		velocity.x = direction.x * currentSpeed
@@ -160,32 +211,57 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+
+# -------------------
+# ACTIONS
+# -------------------
+
 func changeCamera():
+	if not firstPersonCamera or not thirdPersonCamera:
+		return
+
 	if camera == 1:
-		thirdPersonCamera.set_current(true)
+		thirdPersonCamera.current = true
 		camera = 2
-	elif camera == 2:
-		firstPersonCamera.set_current(true)
+	else:
+		firstPersonCamera.current = true
 		camera = 1
 
-func toggleFlashlight():
-	if flashlightToggle == 0:
-		flashlight.light_energy = 1
-		flashlightToggle = 1
+func gunInteraction(gun):
+	var guns = {
+		1: primary,
+		2: secondary,
+		3: tertiary
+	}
+
+	var selected = guns.get(gun)
+	if selected == null:
+		return
+	
+	for item in guns.values():
+		if item != null:
+			item.visible = false
+	
+	if curEquipSlot == gun:
+		selected.visible = false
+		equippedItem = null
+		curEquipSlot = 0
 	else:
-		flashlight.light_energy = 0
-		flashlightToggle = 0
+		selected.visible = true
+		equippedItem = selected
+		curEquipSlot = gun
+
+
+func toggleFlashlight():
+	flashlightToggle = !flashlightToggle
+	flashlight.light_energy = 1 if flashlightToggle else 0
+
 
 func pauseGame():
-	#pauseUI.visible = true
-	#tempUI.visible = false
 	inPauseMenu = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	#AudioServer.set_bus_mute(masterBusIndex, true)
+
 
 func unpauseGame():
-	#pauseUI.visible = false
-	#tempUI.visible = true
 	inPauseMenu = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	#AudioServer.set_bus_mute(masterBusIndex, false)

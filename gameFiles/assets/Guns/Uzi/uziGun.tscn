@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dsgfyiwolq57p"]
+
+[ext_resource type="Script" uid="uid://c1oit453ks06n" path="res://assets/Guns/Uzi/uziScript.gd" id="1_86x3v"]
+[ext_resource type="PackedScene" uid="uid://bopj263v03wxh" path="res://assets/Guns/Uzi/UZISUPTEMP.glb" id="1_wb84c"]
+[ext_resource type="PackedScene" uid="uid://deupryu3dpog6" path="res://assets/Guns/Uzi/UZITEMP.glb" id="2_86x3v"]
+
+[node name="uziGun" type="Node3D" unique_id=1571642211]
+script = ExtResource("1_86x3v")
+ammoType = "9mil"
+maxAmmo = 32
+fireRate = 0.075
+isAutomatic = true
+
+[node name="UZISUPTEMP" parent="." unique_id=362228024 instance=ExtResource("1_wb84c")]
+visible = false
+
+[node name="UZITEMP" parent="." unique_id=1499595182 instance=ExtResource("2_86x3v")]
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=810728638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.036607258, 0.203922)
+target_position = Vector3(0, 0, 0)
