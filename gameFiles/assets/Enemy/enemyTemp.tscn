@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bx8p32mrj8y8j"]
+
+[ext_resource type="Script" uid="uid://dwln8d4ct25s1" path="res://scripts/enemy.gd" id="1_7qvuc"]
+[ext_resource type="Material" uid="uid://doq1s51fe8dk4" path="res://assets/Enemy/Enemy.tres" id="2_5uynd"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_kmobn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7klwu"]
+
+[node name="CubertEVIL" type="RigidBody3D" unique_id=2118065443]
+collision_layer = 5
+script = ExtResource("1_7qvuc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2146982986]
+material_override = ExtResource("2_5uynd")
+mesh = SubResource("BoxMesh_kmobn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1398559329]
+shape = SubResource("BoxShape3D_7klwu")

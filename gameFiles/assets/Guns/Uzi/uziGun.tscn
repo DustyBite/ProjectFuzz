@@ -6,7 +6,7 @@
 
 [node name="uziGun" type="Node3D" unique_id=1571642211]
 script = ExtResource("1_86x3v")
-ammoType = "9mil"
+caliber = "9mil"
 maxAmmo = 32
 fireRate = 0.075
 isAutomatic = true

@@ -8,7 +8,7 @@ var debugLine: MeshInstance3D
 # -------------------
 # STATE
 # -------------------
-@export_enum("9mil", "shotgun") var ammoType: String
+@export_enum("9mil", "shotgun") var caliber: String
 @export var maxAmmo: int
 @export var fireRate: float
 @export var spreadAngle: float = 2.0
@@ -61,7 +61,7 @@ func reload():
 	print("reloaded")
 
 func shoot():
-	match ammoType:
+	match caliber:
 		"9mil":
 			shootSingle()
 		"shotgun":

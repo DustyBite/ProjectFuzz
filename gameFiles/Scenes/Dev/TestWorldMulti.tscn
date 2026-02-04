@@ -5,8 +5,7 @@
 [ext_resource type="Material" uid="uid://pakhjtwjlb5c" path="res://Scenes/Dev/TextWorldMultiTextures/wallMat.tres" id="3_i6tks"]
 [ext_resource type="Script" uid="uid://dwu7d1lcbix0i" path="res://scripts/interactable.gd" id="4_7klwu"]
 [ext_resource type="Material" uid="uid://e65dh38qv41i" path="res://Scenes/Dev/TextWorldMultiTextures/Cubert.tres" id="5_3budn"]
-[ext_resource type="Script" uid="uid://dwln8d4ct25s1" path="res://scripts/enemy.gd" id="6_3budn"]
-[ext_resource type="Material" uid="uid://doq1s51fe8dk4" path="res://Scenes/Dev/TextWorldMultiTextures/Enemy.tres" id="7_hngj5"]
+[ext_resource type="PackedScene" uid="uid://bx8p32mrj8y8j" path="res://assets/Enemy/enemyTemp.tscn" id="6_3budn"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2c0tr"]
 material = ExtResource("2_i6tks")
@@ -1184,14 +1183,5 @@ mesh = SubResource("BoxMesh_kmobn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cubert" unique_id=225892647]
 shape = SubResource("BoxShape3D_7klwu")
 
-[node name="CubertEVIL" type="RigidBody3D" parent="." unique_id=158897654]
+[node name="CubertEVIL" parent="." unique_id=2118065443 instance=ExtResource("6_3budn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4227467, 1.5592166, 0)
-collision_layer = 5
-script = ExtResource("6_3budn")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CubertEVIL" unique_id=1456838635]
-material_override = ExtResource("7_hngj5")
-mesh = SubResource("BoxMesh_kmobn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CubertEVIL" unique_id=837104838]
-shape = SubResource("BoxShape3D_7klwu")
