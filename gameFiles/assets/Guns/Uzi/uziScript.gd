@@ -18,3 +18,29 @@ func shoot():
 			shootSingle(false, hpSpread, hpDamage)
 		"Full Metal Jacket":
 			shootSingle(true, fmjSpread, fmjDamage)
+
+func changeAmmo():
+	clearAmmo()
+	match ammoType:
+		"Armor-Piercing":
+			vest.apAmmo = vest.nineMilAmmo
+			vest.nineMilAmmo = vest.hpAmmo
+			ammoType = "Hollow Point"
+		"Hollow Point":
+			vest.hpAmmo = vest.nineMilAmmo
+			vest.nineMilAmmo = vest.fmjAmmo
+			ammoType = "Full Metal Jacket"
+		"Full Metal Jacket":
+			vest.fmjAmmo = vest.nineMilAmmo
+			vest.nineMilAmmo = vest.apAmmo
+			ammoType = "Armor-Piercing"
+	getAmmo()
+
+func getAmmoType():
+	match ammoType:
+		"Armor-Piercing":
+			ammoTotal = vest.apAmmo
+		"Hollow Point":
+			ammoTotal = vest.hpAmmo
+		"Full Metal Jacket":
+			ammoTotal = vest.fmjAmmo

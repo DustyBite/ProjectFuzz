@@ -3,8 +3,6 @@
 [ext_resource type="Script" uid="uid://cotphobbpe5ov" path="res://scripts/testWorldMulti.gd" id="1_8biw5"]
 [ext_resource type="Material" uid="uid://cdfxk1fj3i6od" path="res://Scenes/Dev/TextWorldMultiTextures/groundMat.tres" id="2_i6tks"]
 [ext_resource type="Material" uid="uid://pakhjtwjlb5c" path="res://Scenes/Dev/TextWorldMultiTextures/wallMat.tres" id="3_i6tks"]
-[ext_resource type="Script" uid="uid://dwu7d1lcbix0i" path="res://scripts/interactable.gd" id="4_7klwu"]
-[ext_resource type="Material" uid="uid://e65dh38qv41i" path="res://Scenes/Dev/TextWorldMultiTextures/Cubert.tres" id="5_3budn"]
 [ext_resource type="PackedScene" uid="uid://bx8p32mrj8y8j" path="res://assets/Enemy/SMTemp.tscn" id="6_3budn"]
 [ext_resource type="PackedScene" uid="uid://ddw4am886yhea" path="res://assets/Enemy/SST.tscn" id="7_hngj5"]
 
@@ -111,10 +109,6 @@ sky_material = SubResource("ProceduralSkyMaterial_ylboy")
 background_mode = 2
 sky = SubResource("Sky_u260v")
 sdfgi_enabled = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_kmobn"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7klwu"]
 
 [node name="TestingWorld" type="Node3D" unique_id=1782244063]
 script = ExtResource("1_8biw5")
@@ -1159,34 +1153,21 @@ shadow_enabled = true
 spawn_path = NodePath("..")
 
 [node name="spawnPoints" type="Node3D" parent="." unique_id=418348574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4797072, 0, 0)
 
 [node name="Spawn1" type="Marker3D" parent="spawnPoints" unique_id=2107270397]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.044427, 0, 1.4307063)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 
 [node name="Spawn2" type="Marker3D" parent="spawnPoints" unique_id=1208409708]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3232832, -2.3841858e-07, -2.597141)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 
-[node name="Spawn3" type="Marker3D" parent="spawnPoints" unique_id=1758363074]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3966503, 0, 1.6909263)
+[node name="Spawn3" type="Marker3D" parent="spawnPoints" unique_id=547954620]
 
-[node name="Spawn4" type="Marker3D" parent="spawnPoints" unique_id=1700640523]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.61545, 0, -2.1093025)
+[node name="Spawn4" type="Marker3D" parent="spawnPoints" unique_id=1758363074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 
-[node name="Cubert" type="RigidBody3D" parent="." unique_id=1402666280]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1223283, 0.8454884, 0)
-collision_layer = 5
-script = ExtResource("4_7klwu")
-promptMessage = "Cubert"
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Cubert" unique_id=1955937639]
-material_override = ExtResource("5_3budn")
-mesh = SubResource("BoxMesh_kmobn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Cubert" unique_id=225892647]
-shape = SubResource("BoxShape3D_7klwu")
-
-[node name="CubertEVIL" parent="." unique_id=2118065443 instance=ExtResource("6_3budn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4227467, 1.5592166, 0)
+[node name="Spawn5" type="Marker3D" parent="spawnPoints" unique_id=1700640523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="EnemyTemp" parent="." unique_id=625194972 instance=ExtResource("7_hngj5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.252716, 0.40000048, -1.8592267)
@@ -1205,3 +1186,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7336106, 0.4, -3.5419846)
 
 [node name="EnemyTemp6" parent="." unique_id=2059420635 instance=ExtResource("6_3budn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9569206, 0.7500005, 2.1290302)
+
+[node name="spiderMediumTemp" parent="." unique_id=482442465 instance=ExtResource("6_3budn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8998127, 0.74999905, -0.8646951)

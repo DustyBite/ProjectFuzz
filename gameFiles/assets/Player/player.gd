@@ -15,9 +15,17 @@ extends CharacterBody3D
 
 @onready var firstPersonModel := $head/firstPersonModel
 @onready var thirdPersonModel := $thirdPersonModel
+@onready var thirdPersonTemp := $thirdPersonModel/playerModelTemp
+
+@onready var vest : Node = $vest
+@onready var dropPos := $dropPos
 
 @onready var flashlight := $head/flashlight
-@onready var pauseUI := $pauseUI
+#@onready var pauseUI := $pauseUI
+
+@onready var weaponLabel := $"UI Items/weaponLabel"
+@onready var ammoType := $"UI Items/ammoType"
+@onready var ammoLabel := $"UI Items/ammoLabel"
 
 # -------------------
 # EQUIPMENT
@@ -89,7 +97,6 @@ func _ready():
 	# Authority may not be valid yet on clients
 	call_deferred("_post_ready")
 
-
 func _post_ready():
 	print("Player:", name, " Authority:", get_multiplayer_authority())
 
@@ -111,12 +118,15 @@ func _post_ready():
 # -------------------
 
 func _process(_delta):
-	if Input.is_action_pressed("use"):
+	if Input.is_action_pressed("attack"):
 		if equippedItem != null:
 			equippedItem.useHeld()
-	elif Input.is_action_just_released("use"):
+	elif Input.is_action_just_released("attack"):
 		if equippedItem != null:
 			equippedItem.useReleased()
+	
+	checkAmmo()
+	
 
 func _input(event):
 	if not is_multiplayer_authority():
@@ -140,18 +150,21 @@ func _input(event):
 	if Input.is_action_just_pressed("changeCamera"):
 		changeCamera()
 	
+	if Input.is_action_just_pressed("drop"):
+		dropEquiped()
+	
 	if Input.is_action_just_pressed("primary"):
 		gunInteraction(1)
 	
 	if Input.is_action_just_pressed("secondary"):
-		if secondary != null:
-			secondary.visible = true
 		gunInteraction(2)
 	
 	if Input.is_action_just_pressed("tertiary"):
-		if tertiary != null:
-			tertiary.visible = true
 		gunInteraction(3)
+	
+	if Input.is_action_just_pressed("changeAmmoType"):
+		if equippedItem != null and equippedItem.has_method("changeAmmo"):
+			equippedItem.changeAmmo()
 	
 	if Input.is_action_just_pressed("reload"):
 		if equippedItem != null:
@@ -180,10 +193,20 @@ func _physics_process(delta):
 		head.position.y = lerp(head.position.y, 1.35 + crouchingDepth, delta * lerpSpeed)
 		standingCollisionShape.disabled = true
 		crouchingCollisionShape.disabled = false
+		
+		var mesh = thirdPersonTemp.mesh
+		mesh.height = 1.0
+		thirdPersonTemp.position.y = mesh.height * 0.5
+		
 	elif not playerHeightRC.is_colliding():
 		head.position.y = lerp(head.position.y, 1.35, delta * lerpSpeed)
 		standingCollisionShape.disabled = false
 		crouchingCollisionShape.disabled = true
+		
+		var mesh = thirdPersonTemp.mesh
+		mesh.height = 1.6
+		thirdPersonTemp.position.y = mesh.height * 0.5
+		
 		currentSpeed = sprintingSpeed if Input.is_action_pressed("sprint") else walkingSpeed
 
 	# Gravity
@@ -227,6 +250,14 @@ func changeCamera():
 		firstPersonCamera.current = true
 		camera = 1
 
+func dropEquiped():
+	if equippedItem != null:
+		self.remove_child(equippedItem)
+		
+		equippedItem.global_transform = dropPos.global_transform
+		#equippedItem.queue_free()
+		equippedItem = null
+
 func gunInteraction(gun):
 	var guns = {
 		1: primary,
@@ -265,3 +296,18 @@ func pauseGame():
 func unpauseGame():
 	inPauseMenu = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+# -------------------
+# UI Elements
+# -------------------
+
+func checkAmmo():
+	if equippedItem != null:
+		weaponLabel.text = equippedItem.weaponLabel
+		ammoType.text = equippedItem.ammoType
+		ammoLabel.text = equippedItem.allAmmo
+	else:
+		weaponLabel.text = ""
+		ammoType.text = ""
+		ammoLabel.text = ""

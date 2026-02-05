@@ -6,7 +6,6 @@
 [node name="boomstick" type="Node3D" unique_id=824920579]
 script = ExtResource("1_pfspb")
 caliber = "shotgun"
-maxAmmo = 2
 
 [node name="BOOMSTICKTEMP" parent="." unique_id=1216218891 instance=ExtResource("1_ltitl")]
 

@@ -4,6 +4,7 @@ class_name GunScript
 # NODES
 # -------------------
 
+
 @onready var raycast := $RayCast3D
 var debugLine: MeshInstance3D
 
@@ -11,8 +12,10 @@ var debugLine: MeshInstance3D
 # STATE
 # -------------------
 
+@export var weaponLabel: String
 @export_enum("9mil", "shotgun") var caliber: String
-@export var maxAmmo: int
+@export var magSize: int
+@export var ammoTotal: int
 @export var fireRate: float
 @export var fireRange: float = 500
 @export var isAutomatic: bool = false
@@ -20,11 +23,19 @@ var debugLine: MeshInstance3D
 var canFire:= true
 var triggerPulled: bool = false
 var currentAmmo = 0
+var allAmmo: String = ""
+var vest : Node
 
 func _ready() -> void:
+	var player = self.get_parent().get_parent().get_parent()
+	vest = player.get_child(2)
+	
+	getAmmo()
+	updateAmmo()
+	
 	raycast.enabled = false
 	raycast.target_position = Vector3(0, 0, fireRange)
-	currentAmmo = maxAmmo
+	currentAmmo = magSize
 	
 	# Create debug line
 	debugLine = MeshInstance3D.new()
@@ -37,6 +48,27 @@ func _ready() -> void:
 	material.albedo_color = Color.RED
 	debugLine.material_override = material
 
+func getAmmo():
+	getAmmoType()
+
+func getAmmoType():
+	pass
+
+func updateAmmo():
+	match caliber:
+		"9mil":
+			vest.nineMilAmmo = ammoTotal
+		"shotgun":
+			vest.shotgunAmmo = ammoTotal
+
+func clearAmmo():
+	ammoTotal += currentAmmo
+	currentAmmo = 0
+	updateAmmo()
+
+func _process(_delta):
+	allAmmo = str(currentAmmo) + "/" + str(ammoTotal)
+
 func useHeld():
 	if canFire and currentAmmo > 0:
 		if not isAutomatic and triggerPulled:
@@ -45,21 +77,34 @@ func useHeld():
 		triggerPulled = true
 		
 		currentAmmo -= 1
-		print(currentAmmo)
+		#print(currentAmmo)
 		shoot()
 		canFire = false
 		await get_tree().create_timer(fireRate).timeout
 		canFire = true
 	elif currentAmmo == 0:
-		print("Out of Ammo")
+		#print("Out of Ammo")
 		return
 
 func useReleased():
 	triggerPulled = false
 
 func reload():
-	currentAmmo = maxAmmo
-	print("reloaded")
+	#getAmmo()
+	if currentAmmo == magSize:
+		print("No need to reload")
+		return
+	elif ammoTotal > 0:
+		var dif
+		dif = magSize - currentAmmo
+		if dif > ammoTotal:
+			dif = ammoTotal
+		currentAmmo += dif
+		ammoTotal -= dif
+		print("reloaded")
+	else:
+		print("out of Ammo")
+	updateAmmo()
 
 func shoot():
 	match caliber:

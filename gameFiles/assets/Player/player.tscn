@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dlykqawln16i"]
 
-[ext_resource type="Script" uid="uid://c3ar6mh5nq4ue" path="res://scripts/player.gd" id="1_qm3y6"]
+[ext_resource type="Script" uid="uid://c3ar6mh5nq4ue" path="res://assets/Player/player.gd" id="1_qm3y6"]
 [ext_resource type="Script" uid="uid://bnxdnwh7ass2t" path="res://scripts/interactionRay.gd" id="2_7gujn"]
+[ext_resource type="Script" uid="uid://dn7po5dqqd7xe" path="res://assets/Player/vest.gd" id="2_cr3b8"]
 [ext_resource type="PackedScene" uid="uid://dsgfyiwolq57p" path="res://assets/Guns/Uzi/uziGun.tscn" id="2_hvr4l"]
 [ext_resource type="PackedScene" uid="uid://duet4nec3tasi" path="res://assets/Guns/Boomstick/boomstick.tscn" id="3_cr3b8"]
 
@@ -47,6 +48,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_3fp30")
 disabled = true
 
+[node name="vest" type="Node3D" parent="." unique_id=1402780193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.003156, 0)
+script = ExtResource("2_cr3b8")
+
 [node name="boxDrop" type="Node3D" parent="." unique_id=1870523537]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 
@@ -71,13 +76,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.35, 0)
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.22806793, 1.1961257, -0.4857589)
 visible = false
 ammoType = "Full Metal Jacket"
-caliber = ""
+weaponLabel = "Uzi"
+magSize = 32
 
 [node name="boomstick" parent="head/firstPersonModel" unique_id=824920579 instance=ExtResource("3_cr3b8")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.18957156, 1.2316588, -0.5847197)
 visible = false
-ammoType = "slug"
-slugDamage = 6000
+weaponLabel = "BoomStick"
+magSize = 2
 
 [node name="firstPersonCamera" type="Camera3D" parent="head" unique_id=942937341]
 cull_mask = 1047554
@@ -108,27 +114,48 @@ target_position = Vector3(0, 1.6, 0)
 [node name="jumpRC" type="RayCast3D" parent="." unique_id=1097347368]
 target_position = Vector3(0, 2, 0)
 
-[node name="pauseUI" type="Control" parent="." unique_id=803059858]
-visible = false
+[node name="UI Items" type="Control" parent="." unique_id=803059858]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="Panel" type="Panel" parent="pauseUI" unique_id=1566603281]
+[node name="weaponLabel" type="Label" parent="UI Items" unique_id=1729875274]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = 997.0
+offset_top = 455.0
+offset_right = 1145.0
+offset_bottom = 519.0
+theme_override_font_sizes/font_size = 30
+text = "TEST TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="pauseUI" unique_id=2135273748]
+[node name="ammoType" type="Label" parent="UI Items" unique_id=91383116]
 layout_mode = 0
-offset_left = 401.0
-offset_top = 33.0
-offset_right = 587.0
-offset_bottom = 83.0
-theme_override_font_sizes/font_size = 25
-text = "GAME PAUSED"
+offset_left = 992.0
+offset_top = 518.0
+offset_right = 1140.0
+offset_bottom = 582.0
+theme_override_font_sizes/font_size = 30
+text = "TEST TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ammoLabel" type="Label" parent="UI Items" unique_id=537241461]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 580.0
+offset_right = 1142.0
+offset_bottom = 644.0
+theme_override_font_sizes/font_size = 30
+text = "TEST AMMO"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=842489269]
 replication_interval = 0.05
 replication_config = SubResource("SceneReplicationConfig_qm3y6")
+
+[node name="dropPos" type="Node3D" parent="." unique_id=923058371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0914242, -0.42386305)
