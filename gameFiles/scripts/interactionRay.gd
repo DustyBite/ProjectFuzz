@@ -9,3 +9,6 @@ func _physics_process(_delta):
 		var collider = get_collider()
 		if collider.has_method("getPrompt"):
 			prompt.text = collider.getPrompt(owner)
+			
+			if Input.is_action_just_pressed("interact"):
+				collider.interact(owner)

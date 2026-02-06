@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://dlykqawln16i"]
+
+[ext_resource type="Script" uid="uid://c3ar6mh5nq4ue" path="res://assets/Player/player.gd" id="1_qm3y6"]
+[ext_resource type="Script" uid="uid://bnxdnwh7ass2t" path="res://scripts/interactionRay.gd" id="2_7gujn"]
+[ext_resource type="Script" uid="uid://dn7po5dqqd7xe" path="res://assets/Player/vest.gd" id="2_cr3b8"]
+[ext_resource type="PackedScene" uid="uid://dsgfyiwolq57p" path="res://assets/Guns/Uzi/uziGun.tscn" id="2_hvr4l"]
+[ext_resource type="PackedScene" uid="uid://duet4nec3tasi" path="res://assets/Guns/Boomstick/boomstick.tscn" id="3_cr3b8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u1t7n"]
+radius = 0.25
+height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3fp30"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_674bt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_674bt"]
+material = SubResource("StandardMaterial3D_674bt")
+radius = 0.25
+height = 1.6
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qm3y6"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("head:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="player" type="CharacterBody3D" unique_id=910820454 node_paths=PackedStringArray("primary", "secondary") groups=["player"]]
+collision_layer = 2
+collision_mask = 27
+script = ExtResource("1_qm3y6")
+primary = NodePath("head/firstPersonModel/uziGun")
+secondary = NodePath("head/firstPersonModel/boomstick")
+
+[node name="standingCollisionShape" type="CollisionShape3D" parent="." unique_id=2134628872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_u1t7n")
+
+[node name="crouchingCollisionShape" type="CollisionShape3D" parent="." unique_id=556485955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_3fp30")
+disabled = true
+
+[node name="vest" type="Node3D" parent="." unique_id=1402780193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.003156, 0)
+script = ExtResource("2_cr3b8")
+
+[node name="boxDrop" type="Node3D" parent="." unique_id=1870523537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="boxPos" type="Node3D" parent="." unique_id=1870953653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.9, -0.6)
+
+[node name="thirdPersonModel" type="Node3D" parent="." unique_id=907576132]
+
+[node name="playerModelTemp" type="MeshInstance3D" parent="thirdPersonModel" unique_id=1546237176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+layers = 5
+mesh = SubResource("CapsuleMesh_674bt")
+skeleton = NodePath("../..")
+
+[node name="head" type="Node3D" parent="." unique_id=1289657209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+
+[node name="firstPersonModel" type="Node3D" parent="head" unique_id=1424949740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.35, 0)
+
+[node name="uziGun" parent="head/firstPersonModel" unique_id=1571642211 instance=ExtResource("2_hvr4l")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.22806793, 1.1961257, -0.4857589)
+visible = false
+ammoType = "Full Metal Jacket"
+weaponLabel = "Uzi"
+magSize = 32
+
+[node name="boomstick" parent="head/firstPersonModel" unique_id=824920579 instance=ExtResource("3_cr3b8")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.18957156, 1.2316588, -0.5847197)
+visible = false
+weaponLabel = "BoomStick"
+magSize = 2
+
+[node name="firstPersonCamera" type="Camera3D" parent="head" unique_id=942937341]
+cull_mask = 1047554
+current = true
+
+[node name="thirdPersonCamera" type="Camera3D" parent="head" unique_id=26166563]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.581, 2.5)
+cull_mask = 1047557
+
+[node name="flashlight" type="SpotLight3D" parent="head" unique_id=1293790235]
+light_energy = 0.0
+
+[node name="interactionRay" type="RayCast3D" parent="head" unique_id=1893120994]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -1.5, 0)
+collision_mask = 4
+script = ExtResource("2_7gujn")
+
+[node name="prompt" type="Label" parent="head/interactionRay" unique_id=1012751360]
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="crouchRC" type="RayCast3D" parent="." unique_id=1228105780]
+target_position = Vector3(0, 1.6, 0)
+
+[node name="jumpRC" type="RayCast3D" parent="." unique_id=1097347368]
+target_position = Vector3(0, 2, 0)
+
+[node name="UI Items" type="Control" parent="." unique_id=803059858]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="weaponLabel" type="Label" parent="UI Items" unique_id=1729875274]
+layout_mode = 0
+offset_left = 997.0
+offset_top = 455.0
+offset_right = 1145.0
+offset_bottom = 519.0
+theme_override_font_sizes/font_size = 30
+text = "TEST TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ammoType" type="Label" parent="UI Items" unique_id=91383116]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 518.0
+offset_right = 1140.0
+offset_bottom = 582.0
+theme_override_font_sizes/font_size = 30
+text = "TEST TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ammoLabel" type="Label" parent="UI Items" unique_id=537241461]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 580.0
+offset_right = 1142.0
+offset_bottom = 644.0
+theme_override_font_sizes/font_size = 30
+text = "TEST AMMO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=842489269]
+replication_interval = 0.05
+replication_config = SubResource("SceneReplicationConfig_qm3y6")
+
+[node name="dropPos" type="Node3D" parent="." unique_id=923058371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0914242, -0.42386305)

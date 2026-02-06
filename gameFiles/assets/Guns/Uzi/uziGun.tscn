@@ -4,10 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://bopj263v03wxh" path="res://assets/Guns/Uzi/UZISUPTEMP.glb" id="1_wb84c"]
 [ext_resource type="PackedScene" uid="uid://deupryu3dpog6" path="res://assets/Guns/Uzi/UZITEMP.glb" id="2_86x3v"]
 
-[node name="uziGun" type="Node3D" unique_id=1571642211]
+[sub_resource type="BoxShape3D" id="BoxShape3D_86x3v"]
+size = Vector3(0.0552063, 0.19372559, 0.50805664)
+
+[node name="UziTemp" type="RigidBody3D" unique_id=1288753438]
+collision_layer = 4
+freeze = true
 script = ExtResource("1_86x3v")
+weaponLabel = "Uzi"
 caliber = "9mil"
-maxAmmo = 32
+magSize = 32
 fireRate = 0.075
 isAutomatic = true
 
@@ -19,3 +25,7 @@ visible = false
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=810728638]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.036607258, 0.203922)
 target_position = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1567039675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.001159668, 0.02)
+shape = SubResource("BoxShape3D_86x3v")

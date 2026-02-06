@@ -19,23 +19,27 @@ var debugLine: MeshInstance3D
 @export var fireRate: float
 @export var fireRange: float = 500
 @export var isAutomatic: bool = false
+@export var player: CharacterBody3D
 
+var weapon
 var canFire:= true
 var triggerPulled: bool = false
 var currentAmmo = 0
 var allAmmo: String = ""
 var vest : Node
+var LocalPosTEMP: Vector3
 
 func _ready() -> void:
-	var player = self.get_parent().get_parent().get_parent()
-	vest = player.get_child(2)
-	
-	getAmmo()
-	updateAmmo()
+	if player != null:
+		#assignEquip(player)
+		vest = player.get_node("vest")
+		setCollision(false)
+		getAmmo()
+		updateAmmo()
 	
 	raycast.enabled = false
 	raycast.target_position = Vector3(0, 0, fireRange)
-	currentAmmo = magSize
+	#currentAmmo = magSize
 	
 	# Create debug line
 	debugLine = MeshInstance3D.new()
@@ -47,6 +51,32 @@ func _ready() -> void:
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = Color.RED
 	debugLine.material_override = material
+
+func clearEquip():
+	player = null
+
+func interact(ply):
+	ply.pickupEquip(self)
+
+func assignEquip(ply):
+	player = ply
+	vest = ply.get_node("vest")
+	setCollision(false)
+	self.position = LocalPosTEMP
+	self.rotation = Vector3(0,PI,0)
+	getAmmo()
+	updateAmmo()
+
+func setCollision(value):
+	if value:
+		self.collision_layer = 1 << 2
+		self.collision_mask = 1
+	else:
+		self.collision_layer = 0
+		self.collision_mask = 0
+
+func getPrompt(_player):
+	return weaponLabel
 
 func getAmmo():
 	getAmmoType()

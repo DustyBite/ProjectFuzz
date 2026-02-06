@@ -3,9 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://1wrn71wyllap" path="res://assets/Guns/Boomstick/BOOMSTICKTEMP.glb" id="1_ltitl"]
 [ext_resource type="Script" uid="uid://b0ubqk3city3g" path="res://assets/Guns/Boomstick/bsScript.gd" id="1_pfspb"]
 
-[node name="boomstick" type="Node3D" unique_id=824920579]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pfspb"]
+size = Vector3(0.04975891, 0.13708496, 0.45968628)
+
+[node name="boomstick" type="RigidBody3D" unique_id=1195036613]
+collision_layer = 4
+freeze = true
 script = ExtResource("1_pfspb")
+weaponLabel = "boomstick"
 caliber = "shotgun"
+magSize = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=465445535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00046539307, -0.021328613, -0.001)
+shape = SubResource("BoxShape3D_pfspb")
 
 [node name="BOOMSTICKTEMP" parent="." unique_id=1216218891 instance=ExtResource("1_ltitl")]
 

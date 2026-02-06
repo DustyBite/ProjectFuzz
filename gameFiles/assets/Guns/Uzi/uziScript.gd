@@ -9,6 +9,9 @@ extends GunScript
 @export var fmjSpread := 3
 @export var fmjDamage := 12
 
+func _ready():
+	super._ready()
+	LocalPosTEMP = Vector3(0.228, 1.196,-0.48)
 
 func shoot():
 	match ammoType:
@@ -35,6 +38,16 @@ func changeAmmo():
 			vest.nineMilAmmo = vest.apAmmo
 			ammoType = "Armor-Piercing"
 	getAmmo()
+
+func updateAmmo():
+	vest.nineMilAmmo = ammoTotal
+	match ammoType:
+		"Armor-Piercing":
+			vest.apAmmo = vest.nineMilAmmo
+		"Hollow Point":
+			vest.hpAmmo = vest.nineMilAmmo
+		"Full Metal Jacket":
+			vest.fmjAmmo = vest.nineMilAmmo
 
 func getAmmoType():
 	match ammoType:

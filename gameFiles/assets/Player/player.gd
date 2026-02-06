@@ -151,7 +151,7 @@ func _input(event):
 		changeCamera()
 	
 	if Input.is_action_just_pressed("drop"):
-		dropEquiped()
+		dropEquipped()
 	
 	if Input.is_action_just_pressed("primary"):
 		gunInteraction(1)
@@ -250,13 +250,63 @@ func changeCamera():
 		firstPersonCamera.current = true
 		camera = 1
 
-func dropEquiped():
-	if equippedItem != null:
-		self.remove_child(equippedItem)
-		
-		equippedItem.global_transform = dropPos.global_transform
-		#equippedItem.queue_free()
-		equippedItem = null
+func pickupEquip(item):
+	if primary == null:
+		primary = item
+		gunInteraction(1)
+	elif secondary == null:
+		secondary = item
+		gunInteraction(2)
+	elif tertiary == null:
+		tertiary = item
+		gunInteraction(3)
+	else:
+		print("No Open Slots")
+		return
+	
+	var parent = item.get_parent()
+	if parent:
+		parent.remove_child(item)
+	
+	firstPersonModel.add_child(item)
+	item.freeze = true
+	item.assignEquip(self)
+
+func dropEquipped():
+	if equippedItem == null:
+		return
+	
+	equippedItem.clearAmmo()
+	equippedItem.setCollision(true)
+	
+	# Get the actual parent and remove from it
+	var parent = equippedItem.get_parent()
+	if parent:
+		parent.remove_child(equippedItem)
+	
+	# Add to the world
+	get_tree().root.add_child(equippedItem)
+	
+	# Set position where it should drop
+	equippedItem.global_transform = dropPos.global_transform
+	
+	# Optional: Add physics so it falls/can be picked up
+	if equippedItem is RigidBody3D:
+		equippedItem.freeze = false
+		equippedItem.linear_velocity = -global_transform.basis.z * 3
+	
+	# Clear equipped reference
+	equippedItem = null
+	
+	match curEquipSlot:
+		1:
+			primary = null
+		2:
+			secondary = null
+		3:
+			tertiary = null
+	
+	curEquipSlot = 0
 
 func gunInteraction(gun):
 	var guns = {

@@ -12,6 +12,10 @@ extends GunScript
 @export var slugDamage := 60
 
 
+func _ready():
+	super._ready()
+	LocalPosTEMP = Vector3(0.19, 1.232,-0.58)
+
 func shoot():
 	match ammoType:
 		"slug":
@@ -37,6 +41,16 @@ func changeAmmo():
 			vest.shotgunAmmo = vest.shotSlug
 			ammoType = "slug"
 	getAmmo()
+
+func updateAmmo():
+	vest.shotgunAmmo = ammoTotal
+	match ammoType:
+		"slug":
+			vest.shotSlug = vest.shotgunAmmo
+		"buck":
+			vest.shotBuck = vest.shotgunAmmo
+		"bird":
+			vest.shotBird = vest.shotgunAmmo
 
 func getAmmoType():
 	match ammoType:
