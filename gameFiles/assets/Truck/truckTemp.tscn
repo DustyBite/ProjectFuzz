@@ -1,3 +1,114 @@
 [gd_scene format=3 uid="uid://brfn3uharwvev"]
 
+[ext_resource type="Material" uid="uid://cf2cncs6h526s" path="res://assets/Truck/truck.tres" id="1_11vfb"]
+[ext_resource type="Script" uid="uid://c1mrlrg0yy0jl" path="res://assets/Truck/truckScript.gd" id="1_jefsx"]
+[ext_resource type="Material" uid="uid://bk2e62c1bi3hw" path="res://assets/Truck/truckTire.tres" id="2_wqeki"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5srxb"]
+size = Vector3(3, 1, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_11vfb"]
+size = Vector3(3, 1, 6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_11vfb"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.5
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jefsx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("FRWheel:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("FRWheel:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="VehicleBody3D" type="VehicleBody3D" unique_id=1263806238]
+mass = 1.0
+script = ExtResource("1_jefsx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=728751070]
+material_override = ExtResource("1_11vfb")
+mesh = SubResource("BoxMesh_5srxb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1781317096]
+shape = SubResource("BoxShape3D_11vfb")
+
+[node name="FRWheel" type="VehicleWheel3D" parent="." unique_id=1848981180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.5, 2.25)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="FRWheel" unique_id=310826664]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="FLWheel" type="VehicleWheel3D" parent="." unique_id=1445959245]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.5, 2.25)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="FLWheel" unique_id=294229122]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="CRWheel" type="VehicleWheel3D" parent="." unique_id=163508580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -1.5, -0.5, 0)
+use_as_traction = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="CRWheel" unique_id=1706621032]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="CLWheel" type="VehicleWheel3D" parent="." unique_id=1107724709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.5, 0)
+use_as_traction = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="CLWheel" unique_id=637933470]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="RRWheel" type="VehicleWheel3D" parent="." unique_id=1362073483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.5, -2.25)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="RRWheel" unique_id=2062047168]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="RLWheel" type="VehicleWheel3D" parent="." unique_id=362102965]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.5, -2.25)
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 1.0
+suspension_stiffness = 50.0
+
+[node name="Wheel" type="MeshInstance3D" parent="RLWheel" unique_id=2076713313]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_wqeki")
+mesh = SubResource("CylinderMesh_11vfb")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1076530455]
+replication_config = SubResource("SceneReplicationConfig_jefsx")

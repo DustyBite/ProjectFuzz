@@ -38,6 +38,11 @@ var curEquipSlot = 0
 var equippedItem : Node3D = null
 
 # -------------------
+# TRUCK
+# -------------------
+var truck : Node3D
+
+# -------------------
 # STATE
 # -------------------
 

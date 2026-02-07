@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://cdfxk1fj3i6od" path="res://Scenes/Dev/TextWorldMultiTextures/groundMat.tres" id="2_i6tks"]
 [ext_resource type="Material" uid="uid://pakhjtwjlb5c" path="res://Scenes/Dev/TextWorldMultiTextures/wallMat.tres" id="3_i6tks"]
 [ext_resource type="PackedScene" uid="uid://bx8p32mrj8y8j" path="res://assets/Enemy/SMTemp.tscn" id="6_3budn"]
+[ext_resource type="PackedScene" uid="uid://brfn3uharwvev" path="res://assets/Truck/truckTemp.tscn" id="6_hngj5"]
 [ext_resource type="PackedScene" uid="uid://ddw4am886yhea" path="res://assets/Enemy/SST.tscn" id="7_hngj5"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2c0tr"]
@@ -112,7 +113,6 @@ sdfgi_enabled = true
 
 [node name="TestingWorld" type="Node3D" unique_id=1782244063]
 script = ExtResource("1_8biw5")
-singleplayer_mode = true
 
 [node name="floor" type="StaticBody3D" parent="." unique_id=1921772296]
 
@@ -1189,3 +1189,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9569206, 0.7500005, 2.12903
 
 [node name="spiderMediumTemp" parent="." unique_id=482442465 instance=ExtResource("6_3budn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8998127, 0.74999905, -0.8646951)
+
+[node name="VehicleBody3D" parent="." unique_id=1263806238 instance=ExtResource("6_hngj5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.738012, 2.1072044, -0.3520708)
