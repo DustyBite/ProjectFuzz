@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://e65dh38qv41i"]
-
-[ext_resource type="Texture2D" uid="uid://bv1br82mevowq" path="res://Textures/Dev/Textures/DT_SageGreen.png" id="1_yfyau"]
-
-[resource]
-albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
-albedo_texture = ExtResource("1_yfyau")
-uv1_triplanar = true
-texture_filter = 0

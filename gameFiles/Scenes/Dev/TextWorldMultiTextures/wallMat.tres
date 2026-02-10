@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://pakhjtwjlb5c"]
-
-[ext_resource type="Texture2D" uid="uid://t4rgcahog5di" path="res://Textures/Dev/Textures/DT_Lavender.png" id="1_3lgos"]
-
-[resource]
-albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
-albedo_texture = ExtResource("1_3lgos")
-uv1_triplanar = true
-texture_filter = 0

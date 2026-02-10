@@ -13,6 +13,7 @@ script = ExtResource("1_pfspb")
 weaponLabel = "boomstick"
 caliber = "shotgun"
 magSize = 2
+fireRate = 0.025
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=465445535]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00046539307, -0.021328613, -0.001)
@@ -23,3 +24,14 @@ shape = SubResource("BoxShape3D_pfspb")
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=565105922]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02302944, 0.203922)
 target_position = Vector3(0, 0, 100)
+
+[node name="flash" type="OmniLight3D" parent="." unique_id=485873244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.022685446, 0.24230483)
+visible = false
+light_color = Color(1, 0.95468724, 0.85430586, 1)
+light_energy = 6.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_reverse_cull_face = true
+omni_range = 8.0
+omni_attenuation = 2.0

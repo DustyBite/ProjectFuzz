@@ -4,7 +4,7 @@ class_name GunScript
 # NODES
 # -------------------
 
-
+@onready var flash := $flash
 @onready var raycast := $RayCast3D
 var debugLine: MeshInstance3D
 
@@ -109,12 +109,18 @@ func useHeld():
 		currentAmmo -= 1
 		#print(currentAmmo)
 		shoot()
+		muzzelFlash()
 		canFire = false
 		await get_tree().create_timer(fireRate).timeout
 		canFire = true
 	elif currentAmmo == 0:
 		#print("Out of Ammo")
 		return
+
+func muzzelFlash():
+	flash.visible = true
+	await get_tree().create_timer(0.05).timeout
+	flash.visible = false
 
 func useReleased():
 	triggerPulled = false

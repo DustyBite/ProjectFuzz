@@ -340,7 +340,7 @@ func gunInteraction(gun):
 
 func toggleFlashlight():
 	flashlightToggle = !flashlightToggle
-	flashlight.light_energy = 1 if flashlightToggle else 0
+	flashlight.light_energy = 2 if flashlightToggle else 0
 
 
 func pauseGame():

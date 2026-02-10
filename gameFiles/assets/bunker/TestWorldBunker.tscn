@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://rghmhx3tjqxd"]
+
+[ext_resource type="Script" uid="uid://b55wmr55dbxtu" path="res://assets/bunker/bunkerScript.gd" id="1_kl3lt"]
+[ext_resource type="PackedScene" uid="uid://p3q20sth74o" path="res://assets/bunker/GenScenes/bunkerWall.tscn" id="2_kl3lt"]
+[ext_resource type="PackedScene" uid="uid://bhpu6op37n1fe" path="res://assets/bunker/GenScenes/bunkerCeiling.tscn" id="3_kl3lt"]
+[ext_resource type="PackedScene" uid="uid://duulq3ws67ks2" path="res://assets/bunker/GenScenes/bunkerSkylight.tscn" id="3_yv5bd"]
+[ext_resource type="PackedScene" uid="uid://brfn3uharwvev" path="res://assets/Truck/truckTemp.tscn" id="4_p1oxl"]
+
+[sub_resource type="Environment" id="Environment_2wxo1"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.01
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_read_sky_light = false
+glow_enabled = true
+glow_levels/2 = 1.0
+glow_levels/3 = 1.0
+glow_levels/4 = 0.5
+glow_levels/5 = 0.2
+fog_mode = 1
+fog_light_color = Color(0.044390544, 0.052667283, 0.065546215, 1)
+fog_density = 0.75
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.38170326, 0.38170323, 0.38170323, 1)
+volumetric_fog_anisotropy = 0.75
+volumetric_fog_length = 250.0
+
+[node name="TestingWorld" type="Node3D" unique_id=1782244063]
+script = ExtResource("1_kl3lt")
+bunkerX = 9
+bunkerY = 10
+bunkerCeiling = ExtResource("3_kl3lt")
+bunkerCeiling3x1 = ExtResource("3_yv5bd")
+bunkerWall = ExtResource("2_kl3lt")
+worldColor = Color(1, 1, 1, 1)
+dayMode = true
+dayEnd = true
+singleplayer_mode = true
+bunker_mode = true
+
+[node name="enviroment" type="Node3D" parent="." unique_id=340698452]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=8678216]
+environment = SubResource("Environment_2wxo1")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1483924777]
+_spawnable_scenes = PackedStringArray("uid://dlykqawln16i")
+spawn_path = NodePath("..")
+
+[node name="spawnPoints" type="Node3D" parent="." unique_id=418348574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4797072, 0, 0)
+
+[node name="Spawn1" type="Marker3D" parent="spawnPoints" unique_id=2107270397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Spawn2" type="Marker3D" parent="spawnPoints" unique_id=1208409708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+
+[node name="Spawn3" type="Marker3D" parent="spawnPoints" unique_id=547954620]
+
+[node name="Spawn4" type="Marker3D" parent="spawnPoints" unique_id=1758363074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="Spawn5" type="Marker3D" parent="spawnPoints" unique_id=1700640523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="VehicleBody3D" parent="." unique_id=1263806238 instance=ExtResource("4_p1oxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.738012, 2.1072044, -0.3520708)

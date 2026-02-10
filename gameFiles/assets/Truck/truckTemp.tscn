@@ -3,6 +3,8 @@
 [ext_resource type="Material" uid="uid://cf2cncs6h526s" path="res://assets/Truck/truck.tres" id="1_11vfb"]
 [ext_resource type="Script" uid="uid://c1mrlrg0yy0jl" path="res://assets/Truck/truckScript.gd" id="1_jefsx"]
 [ext_resource type="Material" uid="uid://bk2e62c1bi3hw" path="res://assets/Truck/truckTire.tres" id="2_wqeki"]
+[ext_resource type="Material" uid="uid://cy1ahlqqu8xq0" path="res://assets/Truck/truckInteractables.tres" id="4_cc4vc"]
+[ext_resource type="Script" uid="uid://dv7jq60gfd4t1" path="res://assets/Truck/teleportNode.gd" id="4_hfjrc"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5srxb"]
 size = Vector3(3, 1, 6)
@@ -29,7 +31,21 @@ properties/3/path = NodePath("FRWheel:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_jefsx"]
+size = Vector3(0.5, 0.9, 0.9)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hfjrc"]
+size = Vector3(0.5, 0.9, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hfjrc"]
+size = Vector3(0.25, 2, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gi8xy"]
+size = Vector3(3, 2, 0.25)
+
 [node name="VehicleBody3D" type="VehicleBody3D" unique_id=1263806238]
+collision_layer = 8
+collision_mask = 9
 mass = 1.0
 script = ExtResource("1_jefsx")
 
@@ -112,3 +128,60 @@ mesh = SubResource("CylinderMesh_11vfb")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1076530455]
 replication_config = SubResource("SceneReplicationConfig_jefsx")
+
+[node name="TeleportNodes" type="Node3D" parent="." unique_id=1676657722]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TeleportNodes" unique_id=2022310077 node_paths=PackedStringArray("TeleportSpot", "truckInterior")]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("4_hfjrc")
+TeleportSpot = NodePath("../TLPTO")
+truckInterior = NodePath("../../truckInterior")
+promptMessage = "Teleport"
+promptInput = "E"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TeleportNodes/StaticBody3D" unique_id=1521844076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, -1.038)
+shape = SubResource("BoxShape3D_jefsx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TeleportNodes/StaticBody3D/CollisionShape3D" unique_id=1966781422]
+material_override = ExtResource("4_cc4vc")
+mesh = SubResource("BoxMesh_hfjrc")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="TeleportNodes/StaticBody3D" unique_id=656441665]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -1.038)
+shape = SubResource("BoxShape3D_jefsx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TeleportNodes/StaticBody3D/CollisionShape3D2" unique_id=1479201381]
+material_override = ExtResource("4_cc4vc")
+mesh = SubResource("BoxMesh_hfjrc")
+skeleton = NodePath("../..")
+
+[node name="TLPTO" type="Node3D" parent="TeleportNodes" unique_id=1641874955]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.71950793, -1.2236929)
+
+[node name="truckInterior" type="StaticBody3D" parent="." unique_id=86594227]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="truckInterior" unique_id=2060565490]
+shape = SubResource("BoxShape3D_11vfb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="truckInterior" unique_id=46536790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4842354, 1.4814502, 0)
+shape = SubResource("BoxShape3D_hfjrc")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="truckInterior" unique_id=182283300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5038723, 1.4814502, 0)
+shape = SubResource("BoxShape3D_hfjrc")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="truckInterior" unique_id=1583423731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.481, 2.9192352)
+shape = SubResource("BoxShape3D_gi8xy")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="truckInterior" unique_id=651046069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.481, -2.9556293)
+shape = SubResource("BoxShape3D_gi8xy")
+
+[connection signal="interacted" from="TeleportNodes/StaticBody3D" to="TeleportNodes/StaticBody3D" method="_on_interacted"]

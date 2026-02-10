@@ -1,10 +1,13 @@
 extends Node3D
+class_name WorldScript
 
 const PLAYER_SCENE := preload("res://assets/Player/player.tscn")
 const PORT := 7000
 const MAX_CLIENTS := 3
 
 @export var singleplayer_mode := false
+@export var bunker_mode := false
+
 
 @onready var spawner: MultiplayerSpawner = $MultiplayerSpawner
 
@@ -13,6 +16,9 @@ var next_spawn_index := 0
 
 
 func _ready():
+	if bunker_mode:
+		generateBunker()
+	
 	spawn_points = get_spawn_points()
 
 	if singleplayer_mode:
@@ -42,6 +48,8 @@ func _ready():
 		print("Starting as SERVER")
 		host_game()
 
+func generateBunker():
+	pass
 
 func get_spawn_points() -> Array[Vector3]:
 	var points: Array[Vector3] = []

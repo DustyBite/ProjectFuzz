@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://laf40tm5fn2w"]
+
+[ext_resource type="Texture2D" uid="uid://c5qfuqbx47lxj" path="res://Textures/Dev/Textures/DT_LightGrey.png" id="1_wigyt"]
+
+[resource]
+albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
+albedo_texture = ExtResource("1_wigyt")
+uv1_triplanar = true
+texture_filter = 0

@@ -34,7 +34,7 @@ properties/2/replication_mode = 1
 
 [node name="player" type="CharacterBody3D" unique_id=910820454 node_paths=PackedStringArray("primary", "secondary")]
 collision_layer = 2
-collision_mask = 27
+collision_mask = 3
 script = ExtResource("1_qm3y6")
 primary = NodePath("head/firstPersonModel/uziGun")
 secondary = NodePath("head/firstPersonModel/boomstick")
@@ -93,6 +93,10 @@ cull_mask = 1047557
 
 [node name="flashlight" type="SpotLight3D" parent="head" unique_id=1293790235]
 light_energy = 0.0
+shadow_enabled = true
+spot_range = 30.0
+spot_attenuation = 1.25
+spot_angle = 50.0
 
 [node name="interactionRay" type="RayCast3D" parent="head" unique_id=1893120994]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
