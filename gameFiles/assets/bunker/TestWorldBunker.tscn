@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bhpu6op37n1fe" path="res://assets/bunker/GenScenes/bunkerCeiling.tscn" id="3_kl3lt"]
 [ext_resource type="PackedScene" uid="uid://duulq3ws67ks2" path="res://assets/bunker/GenScenes/bunkerSkylight.tscn" id="3_yv5bd"]
 [ext_resource type="PackedScene" uid="uid://brfn3uharwvev" path="res://assets/Truck/truckTemp.tscn" id="4_p1oxl"]
+[ext_resource type="PackedScene" uid="uid://cfg473r4gvdpp" path="res://assets/bunker/GenScenes/bunkerEntrence.tscn" id="6_kys0g"]
 
 [sub_resource type="Environment" id="Environment_2wxo1"]
 background_mode = 1
@@ -34,7 +35,8 @@ bunkerY = 9
 bunkerCeiling = ExtResource("3_kl3lt")
 bunkerCeiling3x1 = ExtResource("3_yv5bd")
 bunkerWall = ExtResource("2_kl3lt")
-worldColor = Color(1, 0, 0, 1)
+dayMode = true
+dayEnd = true
 singleplayer_mode = true
 bunker_mode = true
 
@@ -48,7 +50,7 @@ _spawnable_scenes = PackedStringArray("uid://dlykqawln16i")
 spawn_path = NodePath("..")
 
 [node name="spawnPoints" type="Node3D" parent="." unique_id=418348574]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.4797072, 0, 0)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 2.6994677, 0.5, -16.843376)
 
 [node name="Spawn1" type="Marker3D" parent="spawnPoints" unique_id=2107270397]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
@@ -65,4 +67,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="VehicleBody3D" parent="." unique_id=1263806238 instance=ExtResource("4_p1oxl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.738012, 2.1072044, -0.3520708)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9966764, 2.1072044, -14.198276)
+
+[node name="entrence" parent="." unique_id=1934844524 instance=ExtResource("6_kys0g")]
+
+[node name="bunkerSpawnPoint" type="Marker3D" parent="." unique_id=792872360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)

@@ -13,6 +13,7 @@ var hue := 0.0
 var dayTime := 0.0
 var dayLength := 60.0
 @onready var environment := $enviroment
+@onready var bunkerSpawnPos : Marker3D = $bunkerSpawnPoint
 
 func _ready():
 	Global.worldColor = worldColor
@@ -54,8 +55,15 @@ func generateBunker():
 	var bunkerDepth := bunkerY * tileSize
 	var halfGrid := gridSpacing * 0.5
 	
+	# Calculate center offset to align bunker on X axis
+	var centerOffsetX := -(bunkerWidth / 2.0) + (tileSize / 2.0)
+	var spawnPos := bunkerSpawnPos.global_position
+	
+	# Calculate center X index for door entrance
+	var centerXIndex := int(bunkerX / 2)
+	
 	# Calculate how many skylights can fit
-	var numSkylights : = 0
+	var numSkylights := 0
 	var skylightPositions := []
 	
 	# Minimum size check
@@ -91,7 +99,7 @@ func generateBunker():
 				continue
 			
 			var ceiling = bunkerCeiling.instantiate()
-			ceiling.position = Vector3(x * tileSize, 0, y * tileSize)
+			ceiling.position = spawnPos + Vector3(x * tileSize + centerOffsetX, 0, y * tileSize)
 			environment.add_child(ceiling)
 	
 	# --- SPAWN SKYLIGHT STRIPS ---
@@ -100,7 +108,7 @@ func generateBunker():
 			# Spawn a 3x1 piece for each Y position (except the borders)
 			for y in range(1, bunkerY - 1):
 				var centerpiece = bunkerCeiling3x1.instantiate()
-				centerpiece.position = Vector3(centerX * tileSize, 0, y * tileSize)
+				centerpiece.position = spawnPos + Vector3(centerX * tileSize + centerOffsetX, 0, y * tileSize)
 				
 				# Check if this is an edge piece
 				var isFirstEdge := (y == 1)
@@ -121,15 +129,21 @@ func generateBunker():
 	
 	# --- NORTH & SOUTH WALLS (along X axis) ---
 	for x in range(bunkerX):
-		var worldX := x * gridSpacing * 2
-		spawnWall(Vector3(worldX, 0, -15), 90)
-		spawnWall(Vector3(worldX, 0, bunkerDepth - 5), -90)
+		# Skip the center wall segment on the south side (entrance)
+		if x != centerXIndex:
+			var worldX := x * gridSpacing * 2 + centerOffsetX
+			# South wall (entrance side)
+			spawnWall(spawnPos + Vector3(worldX, 0, -15), 90)
+		
+		# North wall (always spawn all segments)
+		var worldX := x * gridSpacing * 2 + centerOffsetX
+		spawnWall(spawnPos + Vector3(worldX, 0, bunkerDepth - 5), -90)
 	
 	# --- EAST & WEST WALLS (along Z axis) ---
 	for y in range(bunkerY):
 		var worldZ := y * gridSpacing * 2
-		spawnWall(Vector3(-15, 0, worldZ), 180)
-		spawnWall(Vector3(bunkerWidth - halfGrid, 0, worldZ), 0)
+		spawnWall(spawnPos + Vector3(-15 + centerOffsetX, 0, worldZ), 180)
+		spawnWall(spawnPos + Vector3(bunkerWidth - halfGrid + centerOffsetX, 0, worldZ), 0)
 	
 	print("Bunker Generated :D")
 

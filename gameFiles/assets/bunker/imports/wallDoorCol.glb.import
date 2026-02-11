@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cm80s805lubug"
-path="res://.godot/imported/wallDoor.glb-4226b8739daefe7339793d56fd421a3b.scn"
+uid="uid://cpljinvw0i2hh"
+path="res://.godot/imported/wallDoorCol.glb-ea9d65acecc5c693def30dc6eb684071.scn"
 
 [deps]
 
-source_file="res://assets/bunker/imports/wallDoor.glb"
-dest_files=["res://.godot/imported/wallDoor.glb-4226b8739daefe7339793d56fd421a3b.scn"]
+source_file="res://assets/bunker/imports/wallDoorCol.glb"
+dest_files=["res://.godot/imported/wallDoorCol.glb-ea9d65acecc5c693def30dc6eb684071.scn"]
 
 [params]
 

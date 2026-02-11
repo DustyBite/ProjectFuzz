@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://chi4cquxksr71"]
+
+[resource]
+emission_enabled = true
+emission = Color(0.6509804, 0.49019608, 0.26666668, 1)
+uv1_triplanar = true
+texture_filter = 0
