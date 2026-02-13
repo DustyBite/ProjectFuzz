@@ -30,13 +30,12 @@ volumetric_fog_length = 250.0
 
 [node name="TestingWorld" type="Node3D" unique_id=1782244063]
 script = ExtResource("1_kl3lt")
-bunkerX = 9
-bunkerY = 9
+bunkerX = 17
+bunkerY = 17
 bunkerCeiling = ExtResource("3_kl3lt")
 bunkerCeiling3x1 = ExtResource("3_yv5bd")
 bunkerWall = ExtResource("2_kl3lt")
-dayMode = true
-dayEnd = true
+worldColor = Color(1, 1, 1, 1)
 singleplayer_mode = true
 bunker_mode = true
 

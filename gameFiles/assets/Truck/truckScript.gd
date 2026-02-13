@@ -18,13 +18,13 @@ func _ready() -> void:
 func _input(_event) -> void:
 	
 	if Input.is_action_just_pressed("truckForwards"):
-		engineForce = 1
+		engineForce = 20
 	
 	if Input.is_action_just_released("truckForwards"):
 		engineForce = 0
 	
 	if Input.is_action_just_pressed("truckBack"):
-		engineForce = -1
+		engineForce = -20
 	
 	if Input.is_action_just_released("truckBack"):
 		engineForce = 0
