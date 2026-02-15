@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://laf40tm5fn2w" path="res://assets/bunker/materials/wall1.tres" id="2_h0eje"]
 [ext_resource type="Material" uid="uid://bvselmwyagjte" path="res://assets/bunker/materials/wall2.tres" id="3_mfk22"]
 [ext_resource type="Material" uid="uid://bkv7n5jx5m3fa" path="res://assets/bunker/materials/glow.tres" id="4_mfk22"]
+[ext_resource type="PhysicsMaterial" uid="uid://c67imlik5lpso" path="res://assets/groundPhysicsMaterial.tres" id="5_vwoi2"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_mfk22"]
 _surfaces = [{
@@ -129,6 +130,7 @@ transform = Transform3D(0.89485645, 0.44635403, 0, -0.44635403, 0.89485645, 0, 0
 shape = SubResource("BoxShape3D_cm71j")
 
 [node name="floor" type="StaticBody3D" parent="." unique_id=1602424733]
+physics_material_override = ExtResource("5_vwoi2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor" unique_id=1514362972]
 shape = SubResource("ConcavePolygonShape3D_hynmq")
@@ -140,7 +142,7 @@ skeleton = NodePath("../..")
 
 [node name="rightLight" type="OmniLight3D" parent="." unique_id=1295362232]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6591065, 28.340899, 6.0000076)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0
@@ -148,7 +150,7 @@ omni_attenuation = 2.0
 
 [node name="leftLight" type="OmniLight3D" parent="." unique_id=1270830107]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6591063, 28.340899, -5.9999914)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0
@@ -156,7 +158,7 @@ omni_attenuation = 2.0
 
 [node name="centerLight" type="OmniLight3D" parent="." unique_id=1447233112]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6591063, 28.340899, 8.583069e-06)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0

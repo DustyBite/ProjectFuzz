@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://by87p62k8s8jj"]
+
+[ext_resource type="Texture2D" uid="uid://cjbyrpyne0dde" path="res://Textures/Dev/Textures/DT_SoftOrange.png" id="1_b2cq8"]
+
+[resource]
+albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
+albedo_texture = ExtResource("1_b2cq8")
+uv1_triplanar = true
+texture_filter = 0

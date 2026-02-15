@@ -9,10 +9,14 @@ extends WorldScript
 @export var dayMode := false
 @export var dayEnd := false
 @export var raveMode := false
+@export var voxelGI : VoxelGI
+@export var voxelGIPadding := 20.0  # Padding around bunker for VoxelGI
+@export var voxelGIHeight := 20.0  # Height of VoxelGI volume
 var hue := 0.0
 var dayTime := 0.0
 var dayLength := 60.0
 @onready var environment := $enviroment
+@onready var worldEnvironment := $WorldEnvironment
 @onready var bunkerSpawnPos : Marker3D = $bunkerSpawnPoint
 
 func _ready():
@@ -20,6 +24,8 @@ func _ready():
 	super._ready()
 
 func _process(delta: float) -> void:
+	worldEnvironment.environment.volumetric_fog_albedo = Global.worldColor
+	
 	if raveMode:
 		hue += delta
 		if hue > 1.0:
@@ -146,6 +152,26 @@ func generateBunker():
 		spawnWall(spawnPos + Vector3(bunkerWidth - halfGrid + centerOffsetX, 0, worldZ), 0)
 	
 	print("Bunker Generated :D")
+	
+	if voxelGI:
+		updateVoxelGI(spawnPos, centerOffsetX, bunkerWidth, bunkerDepth)
+
+func updateVoxelGI(spawnPos: Vector3, centerOffsetX: float, bunkerWidth: float, bunkerDepth: float):
+	# Position the VoxelGI in the center of the bunker
+	voxelGI.position = spawnPos + Vector3(centerOffsetX + bunkerWidth / 2.0, 0, bunkerDepth / 2.0)
+	
+	# Set the size to cover the entire bunker with custom padding
+	voxelGI.size = Vector3(bunkerWidth + voxelGIPadding, voxelGIHeight, bunkerDepth + voxelGIPadding)
+	
+	# Wait one frame for geometry to be fully added
+	await get_tree().process_frame
+	
+	# Rebake the VoxelGI
+	voxelGI.bake()
+	
+	print("VoxelGI updated and rebaked!")
+
+
 
 func spawnWall(pos: Vector3, rot_y: float):
 	var wall = bunkerWall.instantiate()

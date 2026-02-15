@@ -8,7 +8,7 @@
 [ext_resource type="Material" uid="uid://cihxvqojep03p" path="res://assets/Truck/truckInterior.tres" id="6_d41nk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cc4vc"]
-size = Vector3(2.9595184, 2.2735596, 9.049255)
+size = Vector3(2.95, 2.275, 9.05)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hfjrc"]
 _surfaces = [{
@@ -228,20 +228,25 @@ shadow_mesh = SubResource("ArrayMesh_aqa2y")
 [node name="zilE167" type="VehicleBody3D" unique_id=1263806238]
 collision_layer = 8
 collision_mask = 9
+mass = 8000.0
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 1, -0.5)
 script = ExtResource("1_jefsx")
 
 [node name="truckCollisions" type="CollisionShape3D" parent="." unique_id=1781317096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00038909912, 1.877, 0.174)
-visible = false
 shape = SubResource("BoxShape3D_cc4vc")
 
 [node name="FRWheel" type="VehicleWheel3D" parent="." unique_id=1848981180]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09, 0.84, 3.05)
 use_as_traction = true
 use_as_steering = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="FRWheel" unique_id=258361985]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -252,9 +257,12 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09, 0.84000003, 3.05)
 use_as_traction = true
 use_as_steering = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="FLWheel" unique_id=1937026502]
 mesh = SubResource("ArrayMesh_gi8xy")
@@ -263,9 +271,12 @@ skeleton = NodePath("")
 [node name="CRWheel" type="VehicleWheel3D" parent="." unique_id=163508580]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -1.09, 0.84, 0)
 use_as_traction = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="CRWheel" unique_id=727927344]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -275,9 +286,12 @@ skeleton = NodePath("")
 [node name="CLWheel" type="VehicleWheel3D" parent="." unique_id=1107724709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09, 0.84000003, 0)
 use_as_traction = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="CLWheel" unique_id=4166525]
 mesh = SubResource("ArrayMesh_gi8xy")
@@ -287,9 +301,12 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09, 0.84, -3.07)
 use_as_traction = true
 use_as_steering = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="RRWheel" unique_id=331302593]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -300,9 +317,12 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09, 0.84000003, -3.07)
 use_as_traction = true
 use_as_steering = true
-wheel_roll_influence = 50.0
 wheel_radius = 0.85
-suspension_stiffness = 50.0
+wheel_friction_slip = 4.0
+suspension_stiffness = 80.0
+suspension_max_force = 20000.0
+damping_compression = 10.0
+damping_relaxation = 10.0
 
 [node name="zilWheelMesh" type="MeshInstance3D" parent="RLWheel" unique_id=379838538]
 mesh = SubResource("ArrayMesh_gi8xy")
@@ -460,5 +480,8 @@ skeleton = NodePath("")
 [node name="zilInteriorMesh" type="MeshInstance3D" parent="Zil" unique_id=2006654572]
 mesh = SubResource("ArrayMesh_wivh1")
 skeleton = NodePath("")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1128175286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
 
 [connection signal="interacted" from="TeleportNodes/StaticBody3D" to="TeleportNodes/StaticBody3D" method="_on_interacted"]

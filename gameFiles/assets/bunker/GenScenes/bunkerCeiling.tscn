@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://laf40tm5fn2w" path="res://assets/bunker/materials/wall1.tres" id="1_ff0jn"]
 [ext_resource type="Material" uid="uid://cdfxk1fj3i6od" path="res://Scenes/Dev/TextWorldTextures/groundMat.tres" id="1_v84ow"]
 [ext_resource type="Material" uid="uid://bvselmwyagjte" path="res://assets/bunker/materials/wall2.tres" id="2_q2gln"]
+[ext_resource type="PhysicsMaterial" uid="uid://c67imlik5lpso" path="res://assets/groundPhysicsMaterial.tres" id="3_oc80g"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_gq5yy"]
 _surfaces = [{
@@ -71,6 +72,7 @@ mesh = SubResource("ArrayMesh_nbumu")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=2121553073]
+physics_material_override = ExtResource("3_oc80g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=492162773]
 shape = SubResource("ConcavePolygonShape3D_v84ow")

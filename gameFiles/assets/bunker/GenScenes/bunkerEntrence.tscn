@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://laf40tm5fn2w" path="res://assets/bunker/materials/wall1.tres" id="2_67qa0"]
 [ext_resource type="Material" uid="uid://bvselmwyagjte" path="res://assets/bunker/materials/wall2.tres" id="3_em12m"]
 [ext_resource type="Material" uid="uid://bkv7n5jx5m3fa" path="res://assets/bunker/materials/glow.tres" id="4_gbcvp"]
+[ext_resource type="PhysicsMaterial" uid="uid://c67imlik5lpso" path="res://assets/groundPhysicsMaterial.tres" id="5_em12m"]
 [ext_resource type="Material" uid="uid://cdfxk1fj3i6od" path="res://Scenes/Dev/TextWorldTextures/groundMat.tres" id="5_xy0tj"]
 [ext_resource type="Material" uid="uid://chi4cquxksr71" path="res://assets/bunker/materials/elevatorGlow.tres" id="6_67qa0"]
 
@@ -361,6 +362,7 @@ shape = SubResource("ConcavePolygonShape3D_dtjyu")
 
 [node name="floor" type="StaticBody3D" parent="." unique_id=1602424733]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+physics_material_override = ExtResource("5_em12m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor" unique_id=1514362972]
 shape = SubResource("ConcavePolygonShape3D_hynmq")
@@ -372,7 +374,7 @@ skeleton = NodePath("../..")
 
 [node name="rightLight" type="OmniLight3D" parent="." unique_id=1295362232]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.0000076, 28.340899, 2.6591063)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0
@@ -380,7 +382,7 @@ omni_attenuation = 2.0
 
 [node name="leftLight" type="OmniLight3D" parent="." unique_id=1270830107]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.9999914, 28.340899, 2.6591065)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0
@@ -388,7 +390,7 @@ omni_attenuation = 2.0
 
 [node name="centerLight" type="OmniLight3D" parent="." unique_id=1447233112]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.699302e-06, 28.340899, 2.6591063)
-light_energy = 12.0
+light_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 100.0

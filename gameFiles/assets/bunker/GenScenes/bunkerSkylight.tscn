@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://bvselmwyagjte" path="res://assets/bunker/materials/wall2.tres" id="2_42kan"]
 [ext_resource type="Material" uid="uid://bkv7n5jx5m3fa" path="res://assets/bunker/materials/glow.tres" id="3_42kan"]
 [ext_resource type="Material" uid="uid://cdfxk1fj3i6od" path="res://Scenes/Dev/TextWorldTextures/groundMat.tres" id="3_lh1md"]
+[ext_resource type="PhysicsMaterial" uid="uid://c67imlik5lpso" path="res://assets/groundPhysicsMaterial.tres" id="5_3xcng"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_lh1md"]
 _surfaces = [{
@@ -188,6 +189,7 @@ skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=2121553073]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+physics_material_override = ExtResource("5_3xcng")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=299713899]
 shape = SubResource("ConcavePolygonShape3D_okl2t")
@@ -199,7 +201,7 @@ skeleton = NodePath("../..")
 
 [node name="light3" type="OmniLight3D" parent="." unique_id=60102033]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.573696, 38.449898, 1.5015155e-05)
-light_energy = 16.0
+light_energy = 12.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 1000.0
@@ -207,7 +209,7 @@ omni_attenuation = 2.0
 
 [node name="light1" type="OmniLight3D" parent="." unique_id=787553201]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.804613, 36.75713, 1.594963e-05)
-light_energy = 16.0
+light_energy = 12.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 1000.0
@@ -215,7 +217,7 @@ omni_attenuation = 2.0
 
 [node name="light2" type="OmniLight3D" parent="." unique_id=963636507]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5.5736876, 38.449898, 1.5502423e-05)
-light_energy = 16.0
+light_energy = 12.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 1000.0
@@ -223,7 +225,7 @@ omni_attenuation = 2.0
 
 [node name="light4" type="OmniLight3D" parent="." unique_id=1330544132]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 15.804621, 36.75713, 1.4567947e-05)
-light_energy = 16.0
+light_energy = 12.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 omni_range = 1000.0

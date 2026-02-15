@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bvwbs2q4nq00e"]
+
+[ext_resource type="Texture2D" uid="uid://c5qfuqbx47lxj" path="res://Textures/Dev/Textures/DT_LightGrey.png" id="1_u6sps"]
+
+[resource]
+albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
+albedo_texture = ExtResource("1_u6sps")
+metallic = 1.0
+roughness = 0.25
+uv1_triplanar = true
+texture_filter = 0
