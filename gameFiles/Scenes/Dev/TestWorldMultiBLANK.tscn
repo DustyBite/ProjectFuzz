@@ -112,6 +112,7 @@ sdfgi_enabled = true
 
 [node name="TestingWorld" type="Node3D" unique_id=1782244063]
 script = ExtResource("1_u5y13")
+singleplayer_mode = true
 
 [node name="floor" type="StaticBody3D" parent="." unique_id=1921772296]
 
