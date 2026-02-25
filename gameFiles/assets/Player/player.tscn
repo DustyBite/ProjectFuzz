@@ -116,13 +116,13 @@ target_position = Vector3(0, 1.6, 0)
 [node name="jumpRC" type="RayCast3D" parent="." unique_id=1097347368]
 target_position = Vector3(0, 2, 0)
 
-[node name="UI Items" type="Control" parent="." unique_id=803059858]
+[node name="uiElements" type="Control" parent="." unique_id=803059858]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="weaponLabel" type="Label" parent="UI Items" unique_id=1729875274]
+[node name="weaponLabel" type="Label" parent="uiElements" unique_id=1729875274]
 layout_mode = 0
 offset_left = 997.0
 offset_top = 455.0
@@ -133,7 +133,7 @@ text = "TEST TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ammoType" type="Label" parent="UI Items" unique_id=91383116]
+[node name="ammoType" type="Label" parent="uiElements" unique_id=91383116]
 layout_mode = 0
 offset_left = 992.0
 offset_top = 518.0
@@ -144,7 +144,7 @@ text = "TEST TEXT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ammoLabel" type="Label" parent="UI Items" unique_id=537241461]
+[node name="ammoLabel" type="Label" parent="uiElements" unique_id=537241461]
 layout_mode = 0
 offset_left = 968.0
 offset_top = 580.0
@@ -161,3 +161,15 @@ replication_config = SubResource("SceneReplicationConfig_qm3y6")
 
 [node name="dropPos" type="Node3D" parent="." unique_id=923058371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0914242, -0.42386305)
+
+[node name="pauseUI" type="Control" parent="." unique_id=469128054]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="pauseUI" unique_id=601396124]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0

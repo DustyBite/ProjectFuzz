@@ -27,6 +27,7 @@ func _ready():
 		player.name = "1"
 		add_child(player)
 		player.global_position = spawn_points[0]
+		player.worldRoot = self
 		return
 
 	# MultiplayerSpawner setup (Godot 4.6)

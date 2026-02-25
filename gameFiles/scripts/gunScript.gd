@@ -28,6 +28,7 @@ var currentAmmo = 0
 var allAmmo: String = ""
 var vest : Node
 var LocalPosTEMP: Vector3
+var zoomPos: Vector3
 
 func _ready() -> void:
 	if player != null:
@@ -116,6 +117,12 @@ func useHeld():
 	elif currentAmmo == 0:
 		#print("Out of Ammo")
 		return
+
+func zoom(value):
+	if value:
+		print("Zoom On")
+	else:
+		print("Zoom Off")
 
 func muzzelFlash():
 	flash.visible = true

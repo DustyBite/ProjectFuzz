@@ -12,6 +12,13 @@ extends GunScript
 func _ready():
 	super._ready()
 	LocalPosTEMP = Vector3(0.228, 1.196,-0.48)
+	zoomPos = Vector3(0, 1.257,-0.48)
+
+func zoom(value):
+	if value:
+		self.position = zoomPos
+	else:
+		self.position = LocalPosTEMP
 
 func shoot():
 	match ammoType:

@@ -21,11 +21,19 @@ extends CharacterBody3D
 @onready var dropPos := $dropPos
 
 @onready var flashlight := $head/flashlight
-#@onready var pauseUI := $pauseUI
 
-@onready var weaponLabel := $"UI Items/weaponLabel"
-@onready var ammoType := $"UI Items/ammoType"
-@onready var ammoLabel := $"UI Items/ammoLabel"
+var worldRoot
+
+# -------------------
+# UI ELEMENTS
+# -------------------
+
+@onready var pauseUI := $pauseUI
+@onready var uiElements := $uiElements
+
+@onready var weaponLabel := $"uiElements/weaponLabel"
+@onready var ammoType := $"uiElements/ammoType"
+@onready var ammoLabel := $"uiElements/ammoLabel"
 
 # -------------------
 # EQUIPMENT
@@ -100,6 +108,7 @@ func setup_visibility_layers():
 
 func _ready():
 	# Authority may not be valid yet on clients
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	call_deferred("_post_ready")
 
 func _post_ready():
@@ -130,6 +139,13 @@ func _process(_delta):
 		if equippedItem != null:
 			equippedItem.useReleased()
 	
+	if Input.is_action_just_pressed("zoom"):
+		if equippedItem != null and equippedItem.has_method("zoom"):
+			equippedItem.zoom(true)
+	elif Input.is_action_just_released("zoom"):
+		if equippedItem != null and equippedItem.has_method("zoom"):
+			equippedItem.zoom(false)
+	
 	checkAmmo()
 	
 
@@ -139,9 +155,9 @@ func _input(event):
 
 	if Input.is_action_just_pressed("pause"):
 		if inPauseMenu:
-			unpauseGame()
+			unpauseMenu()
 		else:
-			pauseGame()
+			pauseMenu()
 		return
 
 	if inPauseMenu or inTerminal:
@@ -343,14 +359,26 @@ func toggleFlashlight():
 	flashlight.light_energy = 2 if flashlightToggle else 0
 
 
-func pauseGame():
+func pauseMenu():
 	inPauseMenu = true
+	uiElements.visible = false
+	pauseUI.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	if worldRoot != null:
+		if worldRoot.singleplayer_mode:
+			get_tree().paused = true
 
 
-func unpauseGame():
+func unpauseMenu():
 	inPauseMenu = false
+	uiElements.visible = true
+	pauseUI.visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	if worldRoot != null:
+		if worldRoot.singleplayer_mode:
+			get_tree().paused = false
 
 
 # -------------------
