@@ -119,15 +119,15 @@ target_position = Vector3(0, 2, 0)
 [node name="uiElements" type="Control" parent="." unique_id=803059858]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="weaponLabel" type="Label" parent="uiElements" unique_id=1729875274]
 layout_mode = 0
-offset_left = 997.0
-offset_top = 455.0
-offset_right = 1145.0
-offset_bottom = 519.0
+offset_left = 1724.0
+offset_top = 862.0
+offset_right = 1872.0
+offset_bottom = 926.0
 theme_override_font_sizes/font_size = 30
 text = "TEST TEXT"
 horizontal_alignment = 1
@@ -135,10 +135,10 @@ vertical_alignment = 1
 
 [node name="ammoType" type="Label" parent="uiElements" unique_id=91383116]
 layout_mode = 0
-offset_left = 992.0
-offset_top = 518.0
-offset_right = 1140.0
-offset_bottom = 582.0
+offset_left = 1719.0
+offset_top = 925.0
+offset_right = 1867.0
+offset_bottom = 989.0
 theme_override_font_sizes/font_size = 30
 text = "TEST TEXT"
 horizontal_alignment = 1
@@ -146,10 +146,10 @@ vertical_alignment = 1
 
 [node name="ammoLabel" type="Label" parent="uiElements" unique_id=537241461]
 layout_mode = 0
-offset_left = 968.0
-offset_top = 580.0
-offset_right = 1142.0
-offset_bottom = 644.0
+offset_left = 1695.0
+offset_top = 987.0
+offset_right = 1869.0
+offset_bottom = 1051.0
 theme_override_font_sizes/font_size = 30
 text = "TEST AMMO"
 horizontal_alignment = 1
@@ -171,5 +171,27 @@ offset_bottom = 40.0
 
 [node name="Panel" type="Panel" parent="pauseUI" unique_id=601396124]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="closeMenu" type="Button" parent="pauseUI" unique_id=1748702416]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 50.0
+offset_right = 321.0
+offset_bottom = 215.0
+theme_override_font_sizes/font_size = 32
+text = "Close Menu"
+
+[node name="closeGame" type="Button" parent="pauseUI" unique_id=863891218]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 880.0
+offset_right = 305.0
+offset_bottom = 1026.0
+theme_override_font_sizes/font_size = 32
+text = "Quit Game
+"
+
+[connection signal="pressed" from="pauseUI/closeMenu" to="." method="_on_close_menu_pressed"]
+[connection signal="pressed" from="pauseUI/closeGame" to="." method="_on_close_game_pressed"]
