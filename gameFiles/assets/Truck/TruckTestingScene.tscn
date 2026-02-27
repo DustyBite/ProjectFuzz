@@ -5,6 +5,8 @@
 [ext_resource type="Material" uid="uid://pakhjtwjlb5c" path="res://Scenes/Dev/TextWorldTextures/wallMat.tres" id="2_bgg07"]
 [ext_resource type="Material" uid="uid://bwa8po1n47x63" path="res://assets/Water/water.material" id="4_68y37"]
 [ext_resource type="PackedScene" uid="uid://brfn3uharwvev" path="res://assets/Truck/truckTemp.tscn" id="4_q1lu1"]
+[ext_resource type="Script" uid="uid://ctwjgewiyfyge" path="res://scripts/BoyancyTest.gd" id="6_3vklb"]
+[ext_resource type="Material" uid="uid://cvmtel5a38v02" path="res://Textures/Dev/Materials/blue.tres" id="6_w3jww"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q1lu1"]
 material = ExtResource("1_c0r2u")
@@ -150,9 +152,6 @@ size = Vector2(25, 50)
 subdivide_width = 25
 subdivide_depth = 50
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fmtqk"]
-size = Vector3(25, 2, 50)
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4n8x5"]
 
 [sub_resource type="Sky" id="Sky_u260v"]
@@ -162,6 +161,10 @@ sky_material = SubResource("ProceduralSkyMaterial_4n8x5")
 background_mode = 2
 sky = SubResource("Sky_u260v")
 sdfgi_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_3vklb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ltvg4"]
 
 [node name="TruckTestingScene" type="Node3D" unique_id=156312475]
 script = ExtResource("1_bgg07")
@@ -1261,17 +1264,10 @@ mesh = SubResource("BoxMesh_w3jww")
 transform = Transform3D(-0.9837938, -0.17656939, 0.031191858, -0.1764807, 0.9842882, 0.0055954414, -0.03168976, 0, -0.9994977, -49.89268, 2.596067, -35.24962)
 shape = SubResource("ConcavePolygonShape3D_35s65")
 
-[node name="Water" type="StaticBody3D" parent="." unique_id=1300520918]
-
-[node name="water" type="MeshInstance3D" parent="Water" unique_id=1226877414]
+[node name="water" type="MeshInstance3D" parent="." unique_id=1226877414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, -0.25, 0)
 material_override = ExtResource("4_68y37")
 mesh = SubResource("PlaneMesh_ltvg4")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Water" unique_id=85215456]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, -1.25, 0)
-shape = SubResource("BoxShape3D_fmtqk")
 
 [node name="wallE" type="StaticBody3D" parent="." unique_id=232614168]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
@@ -4333,4 +4329,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="zilE167" parent="." unique_id=1263806238 instance=ExtResource("4_q1lu1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.533186, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.81312, -2.0029347, 0)
+
+[node name="cube" type="RigidBody3D" parent="." unique_id=611986969]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.675922, -0.13479185, 2.3841858e-07)
+script = ExtResource("6_3vklb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="cube" unique_id=1387563023]
+material_override = ExtResource("6_w3jww")
+mesh = SubResource("BoxMesh_3vklb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="cube" unique_id=1515180951]
+shape = SubResource("BoxShape3D_ltvg4")

@@ -7,3 +7,6 @@ albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
 albedo_texture = ExtResource("1_m5klg")
 uv1_triplanar = true
 texture_filter = 0
+stencil_mode = 3
+stencil_flags = 2
+stencil_compare = 2

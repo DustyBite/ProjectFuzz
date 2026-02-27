@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cvmtel5a38v02"]
+
+[ext_resource type="Texture2D" uid="uid://b55xt3rjpt2uk" path="res://Textures/Dev/Textures/DT_MutedBlue.png" id="1_p1pjp"]
+
+[resource]
+transparency = 1
+albedo_color = Color(0.601223, 0.601223, 0.60122293, 1)
+albedo_texture = ExtResource("1_p1pjp")
+uv1_triplanar = true
+texture_filter = 0
+stencil_flags = 4
+stencil_compare = 2
