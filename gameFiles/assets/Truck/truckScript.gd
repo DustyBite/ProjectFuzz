@@ -10,9 +10,12 @@ extends VehicleBody3D
 
 
 var isActive = false
-var steeringAngle = 0
-@export var engineForce = 1000
+var steeringAngle: float  = 0
+var targetAngle: float = 0
+var steerSpeed: float  = 5.0
+@export var engineForce = 2000
 @export var brakeForce = 50
+@export var maxSteerAngle: float  = .40
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,19 +36,19 @@ func _input(_event) -> void:
 		truck.brake = 0
 	
 	if Input.is_action_just_pressed("truckLeft"):
-		steeringAngle = .4
+		targetAngle = maxSteerAngle
 	
 	if Input.is_action_just_released("truckLeft"):
-		steeringAngle = 0
+		targetAngle = 0
 	
 	if Input.is_action_just_pressed("truckRight"):
-		steeringAngle = -.4
+		targetAngle = -maxSteerAngle
 	
 	if Input.is_action_just_released("truckRight"):
-		steeringAngle = 0
+		targetAngle = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	
 	#frWheel.engine_force = engineForce
 	#flWheel.engine_force = engineForce
@@ -53,6 +56,8 @@ func _process(_delta: float) -> void:
 	#clWheel.engine_force = engineForce
 	#rrWheel.engine_force = engineForce
 	#rlWheel.engine_force = engineForce
+	
+	steeringAngle = lerp_angle(steeringAngle, targetAngle, steerSpeed * delta)
 	
 	frWheel.steering = steeringAngle
 	flWheel.steering = steeringAngle

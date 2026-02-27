@@ -18,3 +18,4 @@ func _on_interacted(body: Node) -> void:
 		var root = get_tree().get_current_scene()
 		root.add_child(body)
 		body.global_transform = unparentSpot.global_transform
+		body.global_rotation = Vector3()
