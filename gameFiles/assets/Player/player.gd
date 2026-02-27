@@ -385,6 +385,14 @@ func unpauseMenu():
 # UI Elements
 # -------------------
 
+func _on_close_menu_pressed() -> void:
+	unpauseMenu()
+
+func _on_close_game_pressed() -> void:
+	if worldRoot != null:
+		if worldRoot.singleplayer_mode:
+			get_tree().quit()
+
 func checkAmmo():
 	if equippedItem != null:
 		weaponLabel.text = equippedItem.weaponLabel
